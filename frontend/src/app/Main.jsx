@@ -6,23 +6,23 @@
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Dialog from 'material-ui/lib/dialog';
-import {deepOrange500} from 'material-ui/lib/styles/colors';
 import FlatButton from 'material-ui/lib/flat-button';
+import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
+import myTheme from './theme'
+import NavBar from './Views/NavBar'
 
 const styles = {
   container: {
     textAlign: 'center',
     paddingTop: 200,
   },
+  main: {
+    margin: 0
+  }
 };
 
-const muiTheme = getMuiTheme({
-  palette: {
-    accent1Color: deepOrange500,
-  },
-});
+const muiTheme = getMuiTheme(myTheme);
 
 class Main extends React.Component {
   constructor(props, context) {
@@ -57,7 +57,8 @@ class Main extends React.Component {
     );
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <div>
+        <NavBar />
         <div style={styles.container}>
           <Dialog
             open={this.state.open}
@@ -68,16 +69,16 @@ class Main extends React.Component {
             This is React.js
           </Dialog>
           <h1>Bacchanalia</h1>
-          <h2>By Yu Wang, Xiaohang Liu, Zhengchao Liu, Mengxiong Liu</h2>
+          <h2>By Yu Wang, Xiaohang Yu, Zhengchao Liu, Mengxiong Liu</h2>
           <RaisedButton
             label="More"
             primary={true}
             onTouchTap={this.handleTouchTap}
           />
         </div>
-      </MuiThemeProvider>
+      </div>
     );
   }
 }
 
-export default Main;
+export default ThemeDecorator(muiTheme)(Main);

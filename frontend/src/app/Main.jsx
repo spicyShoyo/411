@@ -11,11 +11,21 @@ import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import myTheme from './theme'
 import NavBar from './Views/NavBar'
+import Colors from 'material-ui/lib/styles/colors';
 
 const styles = {
   container: {
     textAlign: 'center',
     paddingTop: 200,
+  },
+  header: {
+    backgroundColor: Colors.lightBlue900,
+    position: 'absolute',
+    width: '100%' auto,
+    height: '61.8%',
+  },
+  headerText: {
+    color: Colors.white
   },
   main: {
     margin: 0
@@ -59,22 +69,24 @@ class Main extends React.Component {
     return (
       <div>
         <NavBar />
-        <div style={styles.container}>
-          <Dialog
-            open={this.state.open}
-            title="Hello CS411 Teammates"
-            actions={standardActions}
-            onRequestClose={this.handleRequestClose}
-          >
-            This is React.js
-          </Dialog>
-          <h1>Bacchanalia</h1>
-          <h2>By Yu Wang, Xiaohang Yu, Zhengchao Liu, Mengxiong Liu</h2>
-          <RaisedButton
-            label="More"
-            primary={true}
-            onTouchTap={this.handleTouchTap}
-          />
+        <div style={styles.header}>
+          <div style={styles.container}>
+            <Dialog
+              open={this.state.open}
+              title="Hello CS411 Teammates"
+              actions={standardActions}
+              onRequestClose={this.handleRequestClose}
+            >
+              This is React.js
+            </Dialog>
+            <h1 style={styles.headerText}>Bacchanalia</h1>
+            <h2 style={styles.headerText}>By Yu Wang, Xiaohang Yu, Zhengchao Liu, Mengxiong Liu</h2>
+            <RaisedButton
+              label="More"
+              primary={true}
+              onTouchTap={this.handleTouchTap}
+            />
+          </div>
         </div>
       </div>
     );

@@ -5,13 +5,9 @@ import ImageGallery from 'react-image-gallery'
 let images = [
   {original: 'http://gethdpic.com/wp-content/uploads/2013/10/Lime-Cocktail-Hd-Widescreen-Wallpapers-.jpg'},
   {original: 'http://wallpoper.com/images/00/24/69/34/alcohol-cocktail_00246934.jpg'},
-  {original: 'http://www.mrwallpaper.com/wallpapers/beach-party-cocktail.jpg'},
-  {original: 'https://images5.alphacoders.com/358/358132.jpg'},
+  {original: 'https://images8.alphacoders.com/371/371404.jpg'},
+  {original: 'http://vladi-room.ru/uploads/vladi/2015/07/kokteyl_stol_bar_alkogol_napitok_43.jpg'},
 ];
-
-const style = {
-  height: 100
-}
 
 class HeaderImageGallery extends React.Component {
   constructor(props, context) {
@@ -25,7 +21,6 @@ class HeaderImageGallery extends React.Component {
   render() {
     return (
        <ImageGallery
-         style={style}
          items={images}
          autoPlay={true}
          showBullets={true}

@@ -7,37 +7,16 @@ import DatePicker from 'material-ui/lib/date-picker/date-picker';
 class SignupView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-    };
   }
 
-  handleOpen = () => {
-    this.setState({open: true});
-  };
-
-  handleClose = () => {
-    this.setState({open: false});
-  };
-
   render() {
-    const actions = [
-      <FlatButton
-        label="Ok"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleClose}
-      />,
-    ];
-
     return (
       <div>
-        <RaisedButton label="Dialog With Date Picker" onTouchTap={this.handleOpen} />
         <Dialog
           title="Dialog With Date Picker"
-          actions={actions}
+          actions={this.props.actions}
           modal={false}
-          open={this.state.open}
+          open={this.props.open}
           onRequestClose={this.handleClose}
         >
           Open a Date Picker dialog from within a dialog.

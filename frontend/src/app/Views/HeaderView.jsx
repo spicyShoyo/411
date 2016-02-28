@@ -7,13 +7,14 @@ import FlatButton from 'material-ui/lib/flat-button';
 const styles = {
   headerView: {
     textAlign: 'center',
-    paddingTop: 220,
+    paddingTop: '30vh',
   },
   header: {
-    backgroundColor: Colors.lightBlue900,
+    backgroundColor: "rgba(29, 87, 155, 0.3)",
     position: 'absolute',
+    top: 0,
+    zIndex: 1,
     width: '100%',
-    height: '61.8%',
   },
   headerTextTitle: {
     color: Colors.white,
@@ -62,7 +63,7 @@ class HeaderView extends React.Component {
       />
     );
 
-    return <div style={styles.header}>
+    return <div style={styles.header} className='header-height'>
       <div style={styles.headerView}>
         <Dialog
           open={this.state.open}

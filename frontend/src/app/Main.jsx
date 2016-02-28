@@ -12,6 +12,7 @@ import Colors from 'material-ui/lib/styles/colors';
 
 import NavBar from './Views/NavBar';
 import HeaderView from './Views/HeaderView'
+import HeaderImageGallery from './Views/HeaderImageGallery'
 
 const muiTheme = getMuiTheme(myTheme);
 
@@ -22,10 +23,11 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
-        <NavBar />
+      <section>
+        <NavBar title="Bacchanalia"/>
+        <HeaderImageGallery />
         <HeaderView />
-      </div>
+      </section>
     );
   }
 }

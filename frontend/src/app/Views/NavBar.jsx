@@ -3,7 +3,6 @@ import AppBar from 'material-ui/lib/app-bar';
 import IconButton from 'material-ui/lib/icon-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import FontIcon from 'material-ui/lib/font-icon';
-import ActionAndroid from 'material-ui/lib/svg-icons/action/android';
 import Colors from 'material-ui/lib/styles/colors';
 
 const styles = {
@@ -13,12 +12,17 @@ const styles = {
   bar: {
     textAlign: 'left',
     position: 'fixed',
+    backgroundColor: 'rgba(0,0,0,0)',
     top: 0
   },
   button: {
     margin: 8,
   },
 };
+
+let handleTouchSignup = () => {
+  console.log("hehe")
+}
 
 const Buttons = () => (
   <div>
@@ -27,6 +31,7 @@ const Buttons = () => (
       style={styles.button}
       />
     <FlatButton label="Sign up"
+      onTouchStart={handleTouchSignup}
       backgroundColor={Colors.lightBlue800}
       style={styles.button} />
   </div>
@@ -41,8 +46,9 @@ class TopAppBar extends React.Component {
     function handleTouchTap() {
       alert('Clicked Navigation Bar');
     }
+
     return <AppBar style={styles.bar}
-      title={<span style={styles.title}>Bacchanalia</span>}
+      title={<span style={styles.title}>{this.props.title}</span>}
       onTitleTouchTap={handleTouchTap}
       iconElementRight={<Buttons />}
       zDepth={0}

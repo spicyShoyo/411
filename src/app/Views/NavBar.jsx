@@ -25,38 +25,14 @@ const styles = {
 class TopAppBar extends React.Component {
   constructor(props, context) {
     super(props, context)
-    this.handleSignupClose = this.handleSignupClose.bind(this);
-    this.handleSingupTap = this.handleSingupTap.bind(this);
-    this.state = {
-      open: false,
-    };
-  }
-
-  handleSignupClose() {
-    this.setState({
-      open: false,
-    });
-  }
-
-  handleSingupTap() {
-    this.setState({
-      open: true,
-    });
   }
 
   handleTitleTap() {
     alert('Clicked Navigation Bar');
   }
 
+
   render() {
-    const signupCloseAction = [
-      <FlatButton
-        label="Ok"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleSignupClose}
-      />,
-    ];
 
     return <AppBar style={styles.bar}
       title={<span style={styles.title}>{this.props.title}</span>}
@@ -68,13 +44,9 @@ class TopAppBar extends React.Component {
             style={styles.button}
             />
           <FlatButton label="Sign up"
-            onTouchTap={this.handleSingupTap}
+            onTouchTap={this.props.signupBtnTap}
             backgroundColor={Colors.lightBlue800}
             style={styles.button} />
-          <SignupView
-            open={this.state.open}
-            actions={signupCloseAction}
-          />
         </div>
       }
       zDepth={0}

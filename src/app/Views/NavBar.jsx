@@ -4,7 +4,6 @@ import IconButton from 'material-ui/lib/icon-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import FontIcon from 'material-ui/lib/font-icon';
 import Colors from 'material-ui/lib/styles/colors';
-import SignupView from './SignupView'
 
 const styles = {
   title: {
@@ -28,18 +27,16 @@ class TopAppBar extends React.Component {
   }
 
   handleTitleTap() {
-    alert('Clicked Navigation Bar');
   }
 
-
   render() {
-
     return <AppBar style={styles.bar}
       title={<span style={styles.title}>{this.props.title}</span>}
       onTitleTouchTap={this.handleTitleTap}
       iconElementRight={
         <div>
           <FlatButton label="Log in"
+            onTouchTap={this.props.loginBtnTap}
             backgroundColor={Colors.lightBlue600}
             style={styles.button}
             />

@@ -15,7 +15,6 @@ class HeaderImageGallery extends React.Component {
   }
 
   handleSlide(index) {
-    console.log('Slid to ' + index);
   }
 
   render() {

@@ -22,7 +22,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: 200,
-    backgroundImage: 'url("/Poly15.jpg")',
+    backgroundImage: 'url("/Poly32.jpg")',
     backgroundSize: '100% auto',
   },
   view: {
@@ -45,11 +45,9 @@ class SignupView extends React.Component {
     this.state = {
       username: '',
       password:'',
-      confirmPassword: '',
       validate: false,
       usernameError: '',
       passwordError: '',
-      confirmPasswordError: '',
     };
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -79,17 +77,11 @@ class SignupView extends React.Component {
         else
           this.setState({passwordError: ''})
         break;
-      case 'confirmPassword':
-        if (text !== this.state.password)
-          this.setState({confirmPasswordError: 'Confirm password should match the password!'})
-        else
-          this.setState({confirmPasswordError: ''})
-        break;
       default:
         break;
     }
 
-    if (this.state.username.length > 3 && this.state.password.length >= 6 && this.state.password.value === this.state.confirmPassword.value)
+    if (this.state.username.length > 3 && this.state.password.length >= 6)
       this.setState({validate: true})
   }
 
@@ -106,11 +98,9 @@ class SignupView extends React.Component {
     this.setState({
       username: '',
       password:'',
-      confirmPassword: '',
       validate: false,
       usernameError: '',
       passwordError: '',
-      confirmPasswordError: '',
     })
     this.props.afterSubmit()
   }
@@ -166,17 +156,6 @@ class SignupView extends React.Component {
               onBlur={this.didFinishTextField}
               value={this.state.password}
               errorText={this.state.passwordError}
-            />
-            <TextField
-              style={styles.textField}
-              hintText="Confirm Password Field"
-              floatingLabelText="Confirm Password"
-              type="password"
-              id="confirmPassword"
-              onChange={this.handleChange}
-              onBlur={this.didFinishTextField}
-              value={this.state.confirmPassword}
-              errorText={this.state.confirmPasswordError}
             />
           </section>
         </Dialog>

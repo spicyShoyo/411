@@ -1,7 +1,6 @@
 import React from 'react';
 import Colors from 'material-ui/lib/styles/colors';
 import RaisedButton from 'material-ui/lib/raised-button';
-import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 
 const styles = {
@@ -9,7 +8,7 @@ const styles = {
     textAlign: 'center',
     paddingTop: '30vh',
   },
-  header: {
+  headerBackground: {
     backgroundColor: "rgba(29, 87, 155, 0.3)",
     position: 'absolute',
     top: 0,
@@ -34,24 +33,6 @@ const styles = {
 class HeaderView extends React.Component {
   constructor(props, context) {
     super(props, context)
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.handleTouchTap = this.handleTouchTap.bind(this);
-
-    this.state = {
-      open: false,
-    };
-  }
-
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  }
-
-  handleTouchTap() {
-    this.setState({
-      open: true,
-    });
   }
 
   render() {
@@ -63,23 +44,15 @@ class HeaderView extends React.Component {
       />
     );
 
-    return <div style={styles.header} className='header-height'>
+    return <div style={styles.headerBackground} className='header-height'>
       <div style={styles.headerView}>
-        <Dialog
-          open={this.state.open}
-          title="Hello CS411 Teammates"
-          actions={standardActions}
-          onRequestClose={this.handleRequestClose}
-        >
-          This is React.js
-        </Dialog>
         <div style={styles.headerTextTitle}>Bacchanalia</div>
         <div style={styles.headerTextSubtitle}>By Yu Wang, Xiaohang Yu, Zhengchao Liu, Mengxiong Liu</div>
         <RaisedButton
           label="More"
           style={styles.mainButton}
           primary={true}
-          onTouchTap={this.handleTouchTap}
+          onTouchTap={this.props.centralBtnTap}
         />
       </div>
     </div>

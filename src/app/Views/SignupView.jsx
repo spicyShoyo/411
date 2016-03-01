@@ -3,6 +3,7 @@ import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
+import Snackbar from 'material-ui/lib/snackbar';
 import Colors from 'material-ui/lib/styles/colors';
 
 const styles = {
@@ -41,25 +42,80 @@ class SignupView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      'username': '',
-      'password':'',
-      'confirmPassword': '',
+      username: '',
+      password:'',
+      confirmPassword: '',
+      validate: false,
+      usernameError: '',
+      passwordError: '',
+      confirmPasswordError: '',
     };
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
+    this.didFinishTextField = this.didFinishTextField.bind(this)
+    this.warningDidClosed = this.warningDidClosed.bind(this)
   }
 
-  handleChange (event){
+  handleChange(event) {
     let temp = {}
     temp[event.target.id] = event.target.value
     this.setState(temp);
   }
 
+  didFinishTextField(event) {
+    let text = event.target.value
+    switch (event.target.id) {
+      case 'username':
+        if (text === '')
+          this.setState({usernameError: 'Username cannot be empty!'})
+        else
+          this.setState({usernameError: ''})
+        break;
+      case 'password':
+        if (text.length < 6)
+          this.setState({passwordError: 'Password length should be greater than 6 characters!'})
+        else
+          this.setState({passwordError: ''})
+        break;
+      case 'confirmPassword':
+        if (text !== this.state.password)
+          this.setState({confirmPasswordError: 'Confirm password should match the password!'})
+        else
+          this.setState({confirmPasswordError: ''})
+        break;
+      default:
+        break;
+    }
+
+    if (this.state.username.length > 0 && this.state.password.length >= 6 && this.state.password.value === this.state.confirmPassword.value)
+      this.setState({validate: true})
+  }
+
   handleSubmit() {
-    if (this.state.password !== this.state.confirmPassword)
-      alert('fick you!')
-    else
+    if (this.state.validate === true) {
       this.props.afterSubmit()
+    }
+    else {
+      this.props.invokeWarning()
+    }
+  }
+
+  handleCancel() {
+    this.setState({
+      username: '',
+      password:'',
+      confirmPassword: '',
+      validate: false,
+      usernameError: '',
+      passwordError: '',
+      confirmPasswordError: '',
+    })
+    this.props.afterSubmit()
+  }
+
+  warningDidClosed() {
+    this.setState({warningInvoked: false})
   }
 
   render() {
@@ -67,8 +123,14 @@ class SignupView extends React.Component {
       <section>
         <Dialog
           contentStyle={styles.container}
-          title="Login"
+          title="Sign Up"
           actions={[
+            <FlatButton
+              label="Cancel"
+              primary={false}
+              keyboardFocused={false}
+              onTouchTap={this.handleCancel}
+            />,
             <FlatButton
               label="Submit"
               primary={true}
@@ -89,7 +151,9 @@ class SignupView extends React.Component {
               floatingLabelText="Username"
               id="username"
               onChange={this.handleChange}
+              onBlur={this.didFinishTextField}
               value={this.state.username}
+              errorText={this.state.usernameError}
             />
             <TextField
               style={styles.textField}
@@ -98,7 +162,9 @@ class SignupView extends React.Component {
               type="password"
               id="password"
               onChange={this.handleChange}
+              onBlur={this.didFinishTextField}
               value={this.state.password}
+              errorText={this.state.passwordError}
             />
             <TextField
               style={styles.textField}
@@ -107,7 +173,9 @@ class SignupView extends React.Component {
               type="password"
               id="confirmPassword"
               onChange={this.handleChange}
+              onBlur={this.didFinishTextField}
               value={this.state.confirmPassword}
+              errorText={this.state.confirmPasswordError}
             />
           </section>
         </Dialog>

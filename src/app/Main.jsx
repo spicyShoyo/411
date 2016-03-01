@@ -14,6 +14,7 @@ import NavBar from './Views/NavBar';
 import HeaderView from './Views/HeaderView'
 import HeaderImageGallery from './Views/HeaderImageGallery'
 import SignupView from './Views/SignupView'
+import Snackbar from 'material-ui/lib/snackbar';
 
 const muiTheme = getMuiTheme(myTheme);
 
@@ -23,9 +24,11 @@ class Main extends React.Component {
     this.state = {
       signupModalOpen : false,
       loginModalOpen : false,
+      warningInvoked: false,
     }
     this.toggleSignupModal = this.toggleSignupModal.bind(this)
     this.toggleLoginModal = this.toggleLoginModal.bind(this)
+    this.toggleWarning = this.toggleWarning.bind(this)
   }
 
   toggleSignupModal() {
@@ -40,12 +43,19 @@ class Main extends React.Component {
     })
   }
 
+  toggleWarning() {
+    this.setState({
+      warningInvoked: !this.state.warningInvoked
+    })
+  }
+
   render() {
     return (
       <section>
         <SignupView
           open={this.state.signupModalOpen}
           afterSubmit={this.toggleSignupModal}
+          invokeWarning={this.toggleWarning}
         />
         <NavBar
           title="Bacchanalia"
@@ -53,6 +63,12 @@ class Main extends React.Component {
           loginBtnTap={this.toggleLoginModal}/>
         <HeaderImageGallery />
         <HeaderView />
+        <Snackbar
+          open={this.state.warningInvoked}
+          message='Cannot submit the request due to error shown above!'
+          autoHideDuration={4000}
+          onRequestClose={this.toggleWarning}
+        />
       </section>
     );
   }

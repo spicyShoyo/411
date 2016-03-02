@@ -5,14 +5,13 @@ import FlatButton from 'material-ui/lib/flat-button';
 import FontIcon from 'material-ui/lib/font-icon';
 import Colors from 'material-ui/lib/styles/colors';
 
-const styles = {
+let styles = {
   title: {
     cursor: 'pointer',
   },
   bar: {
     textAlign: 'left',
     position: 'fixed',
-    backgroundColor: 'rgba(0,0,0,0)',
     top: 0
   },
   button: {
@@ -24,8 +23,11 @@ const styles = {
 class TopAppBar extends React.Component {
   constructor(props, context) {
     super(props, context)
+    if (this.props.transparent === true)
+      styles.bar.backgroundColor = 'rgba(0,0,0,0)'
+    this.handleTitleTap = this.handleTitleTap.bind(this);
   }
-
+  
   handleTitleTap() {
   }
 

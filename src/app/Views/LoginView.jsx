@@ -67,7 +67,7 @@ class SignupView extends React.Component {
     switch (event.target.id) {
       case 'username':
         if (text.length <= 3)
-          this.setState({usernameError: 'Username cannot be empty!'})
+          this.setState({usernameError: 'Username should have at least 3 characters!'})
         else
           this.setState({usernameError: ''})
         break;

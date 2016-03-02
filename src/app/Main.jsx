@@ -65,6 +65,7 @@ class Main extends React.Component {
         />
         <NavBar
           title="Bacchanalia"
+          transparent={true}
           signupBtnTap={this.toggleSignupModal}
           loginBtnTap={this.toggleLoginModal}/>
         <HeaderImageGallery />

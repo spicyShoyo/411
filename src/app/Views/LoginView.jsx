@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
 import Snackbar from 'material-ui/lib/snackbar';
 import Colors from 'material-ui/lib/styles/colors';
+import api from '../API.jsx';
 
 const styles = {
   container: {
@@ -80,17 +81,23 @@ class SignupView extends React.Component {
       default:
         break;
     }
-
     if (this.state.username.length > 3 && this.state.password.length >= 6)
       this.setState({validate: true})
   }
 
   handleSubmit() {
     if (this.state.validate === true) {
-      this.props.afterSubmit()
+      api.loginRequest(this.state.username, this.state.password)
+      .then((res) => {
+        console.log(res.token)
+        this.props.invokeWarning("Log In Succeed!")
+        this.props.afterSubmit()
+      }).catch((err) => {
+        this.props.invokeWarning("Submission failed! Please check your username and password entered!")
+      })
     }
     else {
-      this.props.invokeWarning()
+      this.props.invokeWarning("Submission failed! Please check your username and password entered!")
     }
   }
 
@@ -114,7 +121,7 @@ class SignupView extends React.Component {
       <section>
         <Dialog
           contentStyle={styles.container}
-          title="Sign Up"
+          title="Login"
           actions={[
             <FlatButton
               label="Cancel"

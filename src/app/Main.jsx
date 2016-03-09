@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import $ from 'jquery';
 
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
@@ -27,43 +26,29 @@ class Main extends React.Component {
       signupModalOpen : false,
       loginModalOpen : false,
       warningInvoked: false,
+      warningMessage: "",
     }
     this.toggleSignupModal = this.toggleSignupModal.bind(this)
     this.toggleLoginModal = this.toggleLoginModal.bind(this)
     this.toggleWarning = this.toggleWarning.bind(this)
-
-    let serverURL = "http://172.17.218.171:51119/v1/mock/"
-    $.ajax({
-          url: serverURL,
-          type: "GET",
-          dataType: 'json',
-          cache: false,
-          success: function(data) {
-            this.setState({data: data});
-            console.log(data);
-          }.bind(this),
-          error: function(xhr, status, err) {
-            console.error(serverURL, status, err.toString());
-          }.bind(this)
-        });
+    this.setWarning = this.setWarning.bind(this)
   }
 
   toggleSignupModal() {
-    this.setState({
-      signupModalOpen : !this.state.signupModalOpen
-    })
+    this.setState({signupModalOpen : !this.state.signupModalOpen})
   }
 
   toggleLoginModal() {
-    this.setState({
-      loginModalOpen: !this.state.loginModalOpen
-    })
+    this.setState({loginModalOpen: !this.state.loginModalOpen})
   }
 
   toggleWarning() {
-    this.setState({
-      warningInvoked: !this.state.warningInvoked
-    })
+    this.setState({warningInvoked: !this.state.warningInvoked})
+  }
+
+  setWarning(message) {
+    this.setState({warningMessage: message})
+    this.toggleWarning()
   }
 
   render() {
@@ -72,12 +57,12 @@ class Main extends React.Component {
         <SignupView
           open={this.state.signupModalOpen}
           afterSubmit={this.toggleSignupModal}
-          invokeWarning={this.toggleWarning}
+          invokeWarning={this.setWarning}
         />
         <LoginView
           open={this.state.loginModalOpen}
           afterSubmit={this.toggleLoginModal}
-          invokeWarning={this.toggleWarning}
+          invokeWarning={this.setWarning}
         />
         <NavBar
           title="Bacchanalia"
@@ -90,7 +75,7 @@ class Main extends React.Component {
         />
         <Snackbar
           open={this.state.warningInvoked}
-          message='Cannot submit the request due to the error shown above!'
+          message={this.state.warningMessage}
           autoHideDuration={4000}
           onRequestClose={this.toggleWarning}
         />

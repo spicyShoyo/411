@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
 import Snackbar from 'material-ui/lib/snackbar';
 import Colors from 'material-ui/lib/styles/colors';
+import api from '../API.jsx';
 
 const styles = {
   container: {
@@ -69,7 +70,7 @@ class SignupView extends React.Component {
     switch (event.target.id) {
       case 'username':
         if (text.length <= 3)
-          this.setState({usernameError: 'Username cannot be empty!'})
+          this.setState({usernameError: 'Username should have at least 3 characters!'})
         else
           this.setState({usernameError: ''})
         break;
@@ -95,10 +96,17 @@ class SignupView extends React.Component {
 
   handleSubmit() {
     if (this.state.validate === true) {
-      this.props.afterSubmit()
+      api.signupRequest(this.state.username, this.state.password)
+      .then((res) => {
+        console.log(res.token)
+        this.props.invokeWarning("Sign Up Succeed!")
+        this.props.afterSubmit()
+      }).catch((err) => {
+        this.props.invokeWarning("Submission failed! Please check your username and password entered!")
+      })
     }
     else {
-      this.props.invokeWarning()
+      this.props.invokeWarning("Submission failed! Please check your username and password entered!")
     }
   }
 

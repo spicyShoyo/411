@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './main'; // Our custom react component
+import Home from './home';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -11,4 +13,10 @@ injectTapEventPlugin();
 
 // Render the main app react component into the app div.
 // For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
-ReactDOM.render(<Main />, document.getElementById('app'));
+ReactDOM.render((
+  <Router history={browserHistory}>
+    <Route path="/" component={Main}>
+      <IndexRoute component={Home} />
+    </Route>
+  </Router>
+  ), document.getElementById('app'));

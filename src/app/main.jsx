@@ -11,11 +11,12 @@ import myTheme from './theme';
 import Colors from 'material-ui/lib/styles/colors';
 
 import NavBar from './views/navbar';
-import HeaderView from './views/header-view'
-import HeaderImageGallery from './views/header-image-gallery'
 import SignupView from './views/signup-view'
 import LoginView from './views/login-view'
 import Snackbar from 'material-ui/lib/snackbar';
+
+import UIDispatcher from './utils/ui-dispatcher'
+import UIEvents from './utils/ui-events'
 
 const muiTheme = getMuiTheme(myTheme);
 
@@ -26,12 +27,16 @@ class Main extends React.Component {
       signupModalOpen : false,
       loginModalOpen : false,
       warningInvoked: false,
-      warningMessage: "",
+      warningMessage: ""
     }
     this.toggleSignupModal = this.toggleSignupModal.bind(this)
     this.toggleLoginModal = this.toggleLoginModal.bind(this)
     this.toggleWarning = this.toggleWarning.bind(this)
     this.setWarning = this.setWarning.bind(this)
+  }
+
+  componentDidMount() {
+    UIDispatcher.on(UIEvents.LOGIN_DIALOG_OPEN, this.toggleLoginModal);
   }
 
   toggleSignupModal() {
@@ -69,10 +74,9 @@ class Main extends React.Component {
           transparent={true}
           signupBtnTap={this.toggleSignupModal}
           loginBtnTap={this.toggleLoginModal}/>
-        <HeaderImageGallery />
-        <HeaderView
-          centralBtnTap={this.toggleLoginModal}
-        />
+
+        { this.props.children }
+
         <Snackbar
           open={this.state.warningInvoked}
           message={this.state.warningMessage}

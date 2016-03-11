@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
 import Snackbar from 'material-ui/lib/snackbar';
 import Colors from 'material-ui/lib/styles/colors';
-import api from '../API.jsx';
+import api from '../api.jsx';
 
 const styles = {
   container: {
@@ -23,7 +23,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: 200,
-    backgroundImage: 'url("/Poly32.jpg")',
+    backgroundImage: 'url("/Poly15.jpg")',
     backgroundSize: '100% auto',
   },
   view: {
@@ -46,9 +46,11 @@ class SignupView extends React.Component {
     this.state = {
       username: '',
       password:'',
+      confirmPassword: '',
       validate: false,
       usernameError: '',
       passwordError: '',
+      confirmPasswordError: '',
     };
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -78,19 +80,26 @@ class SignupView extends React.Component {
         else
           this.setState({passwordError: ''})
         break;
+      case 'confirmPassword':
+        if (text !== this.state.password)
+          this.setState({confirmPasswordError: 'Confirm password should match the password!'})
+        else
+          this.setState({confirmPasswordError: ''})
+        break;
       default:
         break;
     }
-    if (this.state.username.length > 3 && this.state.password.length >= 6)
+
+    if (this.state.username.length > 3 && this.state.password.length >= 6 && this.state.password.value === this.state.confirmPassword.value)
       this.setState({validate: true})
   }
 
   handleSubmit() {
     if (this.state.validate === true) {
-      api.loginRequest(this.state.username, this.state.password)
+      api.signupRequest(this.state.username, this.state.password)
       .then((res) => {
         console.log(res.token)
-        this.props.invokeWarning("Log In Succeed!")
+        this.props.invokeWarning("Sign Up Succeed!")
         this.props.afterSubmit()
       }).catch((err) => {
         this.props.invokeWarning("Submission failed! Please check your username and password entered!")
@@ -105,9 +114,11 @@ class SignupView extends React.Component {
     this.setState({
       username: '',
       password:'',
+      confirmPassword: '',
       validate: false,
       usernameError: '',
       passwordError: '',
+      confirmPasswordError: '',
     })
     this.props.afterSubmit()
   }
@@ -121,7 +132,7 @@ class SignupView extends React.Component {
       <section>
         <Dialog
           contentStyle={styles.container}
-          title="Login"
+          title="Sign Up"
           actions={[
             <FlatButton
               label="Cancel"
@@ -163,6 +174,17 @@ class SignupView extends React.Component {
               onBlur={this.didFinishTextField}
               value={this.state.password}
               errorText={this.state.passwordError}
+            />
+            <TextField
+              style={styles.textField}
+              hintText="Confirm Password Field"
+              floatingLabelText="Confirm Password"
+              type="password"
+              id="confirmPassword"
+              onChange={this.handleChange}
+              onBlur={this.didFinishTextField}
+              value={this.state.confirmPassword}
+              errorText={this.state.confirmPasswordError}
             />
           </section>
         </Dialog>

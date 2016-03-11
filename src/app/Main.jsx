@@ -10,11 +10,11 @@ import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import myTheme from './theme';
 import Colors from 'material-ui/lib/styles/colors';
 
-import NavBar from './Views/NavBar';
-import HeaderView from './Views/HeaderView'
-import HeaderImageGallery from './Views/HeaderImageGallery'
-import SignupView from './Views/SignupView'
-import LoginView from './Views/LoginView'
+import NavBar from './views/navbar';
+import HeaderView from './views/header-view'
+import HeaderImageGallery from './views/header-image-gallery'
+import SignupView from './views/signup-view'
+import LoginView from './views/login-view'
 import Snackbar from 'material-ui/lib/snackbar';
 
 const muiTheme = getMuiTheme(myTheme);

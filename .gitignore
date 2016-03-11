@@ -34,3 +34,7 @@ node_modules
 
 *.tags
 *.tags1
+
+# Ignore IntelliJ files
+.idea
+*.iml

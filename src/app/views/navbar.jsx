@@ -68,7 +68,7 @@ class TopAppBar extends React.Component {
     }
     else
       rightElement =
-        <FlatButton label={`Hello ${this.state.name}`} />
+        <FlatButton label={`${this.state.name}`} />
     return <AppBar style={styles.bar}
       title={<span style={styles.title}>{this.props.title}</span>}
       onLeftIconButtonTouchTap={this.handleTitleTap}

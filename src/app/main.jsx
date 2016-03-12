@@ -29,6 +29,7 @@ class Main extends React.Component {
       signupModalOpen : false,
       loginModalOpen : false,
       warningInvoked: false,
+      navbarTransparent: true,
       warningMessage: ""
     }
     this.toggleSignupModal = this.toggleSignupModal.bind(this)
@@ -84,7 +85,7 @@ class Main extends React.Component {
         <LeftNavBar />
         <NavBar
           title="Bacchanalia"
-          transparent={true} />
+          transparent={window.location.pathname === '/'} />
 
         { this.props.children }
 

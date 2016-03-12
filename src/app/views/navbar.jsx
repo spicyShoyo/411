@@ -58,11 +58,11 @@ class TopAppBar extends React.Component {
         <div>
           <FlatButton label="Log in"
             onTouchTap={() => UIDispatcher.emit(UIEvents.LOGIN_DIALOG_TOGGLE)}
-            backgroundColor={Colors.lightBlue600}
+            backgroundColor={Colors.lightBlue400}
             style={styles.button} />
           <FlatButton label="Sign up"
             onTouchTap={() => UIDispatcher.emit(UIEvents.SIGN_UP_DIALOG_TOGGLE)}
-            backgroundColor={Colors.lightBlue800}
+            backgroundColor={Colors.lightBlue600}
             style={styles.button} />
         </div>;
     }

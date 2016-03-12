@@ -1,4 +1,4 @@
-const serverURL = "http://172.17.83.10:51119/v1/"
+const serverURL = "http://bac-backend.herokuapp.com/v1/"
 
 let instance = null;
 
@@ -24,7 +24,7 @@ let API = {
       username: username,
       password: password
     })
-  },
+  }
 }
 
 export default API

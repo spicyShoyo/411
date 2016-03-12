@@ -14,8 +14,7 @@ import NavBar from './views/navbar';
 import SignupView from './views/signup-view'
 import LoginView from './views/login-view'
 import Snackbar from 'material-ui/lib/snackbar';
-import IntroTagView from './Views/intro-tag-view';
-import SearchView from './Views/search-view'
+import LeftNavBar from './views/left-navbar';
 
 import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'
@@ -33,12 +32,20 @@ class Main extends React.Component {
     }
     this.toggleSignupModal = this.toggleSignupModal.bind(this)
     this.toggleLoginModal = this.toggleLoginModal.bind(this)
-    this.toggleWarning = this.toggleWarning.bind(this)
-    this.setWarning = this.setWarning.bind(this)
+    this.toggleWarning = this.toggleWarning.bind(this);
+    this.setWarningText = this.setWarningText.bind(this);
   }
 
   componentDidMount() {
-    UIDispatcher.on(UIEvents.LOGIN_DIALOG_OPEN, this.toggleLoginModal);
+    UIDispatcher.on(UIEvents.LOGIN_DIALOG_TOGGLE, this.toggleLoginModal);
+    UIDispatcher.on(UIEvents.SIGN_UP_DIALOG_TOGGLE, this.toggleSignupModal);
+    UIDispatcher.on(UIEvents.SNACKBAR_TOGGLE, this.setWarningText);
+  }
+
+  componentWillUnmount() {
+    UIDispatcher.removeAllListeners(UIEvents.LOGIN_DIALOG_TOGGLE);
+    UIDispatcher.removeAllListeners(UIEvents.SIGN_UP_DIALOG_TOGGLE);
+    UIDispatcher.removeAllListeners(UIEvents.SNACKBAR_TOGGLE);
   }
 
   toggleSignupModal() {
@@ -49,13 +56,15 @@ class Main extends React.Component {
     this.setState({loginModalOpen: !this.state.loginModalOpen})
   }
 
-  toggleWarning() {
-    this.setState({warningInvoked: !this.state.warningInvoked})
+  setWarningText(text) {
+    if ('string' === typeof text) {
+      this.setState({warningMessage: text});
+      this.toggleWarning();
+    }
   }
 
-  setWarning(message) {
-    this.setState({warningMessage: message})
-    this.toggleWarning()
+  toggleWarning() {
+    this.setState({warningInvoked: !this.state.warningInvoked});
   }
 
   render() {
@@ -71,30 +80,19 @@ class Main extends React.Component {
           afterSubmit={this.toggleLoginModal}
           invokeWarning={this.setWarning}
         />
+        <LeftNavBar />
         <NavBar
           title="Bacchanalia"
-          transparent={true}
-          signupBtnTap={this.toggleSignupModal}
-          loginBtnTap={this.toggleLoginModal}/>
+          transparent={true} />
 
         { this.props.children }
 
         <Snackbar
           open={this.state.warningInvoked}
           message={this.state.warningMessage}
-          autoHideDuration={4000}
+          autoHideDuration={5000}
           onRequestClose={this.toggleWarning}
         />
-        <IntroTagView icon="glyphicon glyphicon-user"
-        text="Bacchanalia Bacchanalia Bacchanalia Bacchanalia Bacchanalia"
-        />
-        <IntroTagView icon="glyphicon glyphicon-play"
-        text="Bacchanalia Bacchanalia Bacchanalia Bacchanalia Bacchanalia"
-        />
-        <IntroTagView icon="glyphicon glyphicon-info-sign"
-        text="Bacchanalia Bacchanalia Bacchanalia Bacchanalia Bacchanalia"
-        />
-    <SearchView />
       </section>
     );
   }

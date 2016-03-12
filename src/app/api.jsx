@@ -1,4 +1,4 @@
-const serverURL = "http://bac-backend.herokuapp.com/v1/"
+const serverURL = "http://172.17.87.138:51119/v1/"
 
 let instance = null;
 
@@ -24,7 +24,17 @@ let API = {
       username: username,
       password: password
     })
-  }
+  },
+  drinkTyped(drinkTyped) {
+    return request('post', 'drinktyped', {
+        drinktyped:drinkTyped
+    })
+  },
+  ingredientTyped(ingredientTyped) {
+    return request('post', 'ingredienttyped', {
+        ingredienttyped:ingredientTyped
+    })
+  },
 }
 
 export default API

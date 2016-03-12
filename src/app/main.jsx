@@ -14,11 +14,8 @@ import NavBar from './views/navbar';
 import SignupView from './views/signup-view';
 import LoginView from './views/login-view';
 import Snackbar from 'material-ui/lib/snackbar';
-<<<<<<< HEAD
 import DropDownMenuView from './views/drop-down-menu-view';
 import AddDrinkView from './views/add-drink-view';
-=======
->>>>>>> d226d2b0291015cb334b8a8a23c08af3a9c1156f
 import LeftNavBar from './views/left-navbar';
 
 import UIDispatcher from './utils/ui-dispatcher';
@@ -99,11 +96,8 @@ class Main extends React.Component {
           autoHideDuration={5000}
           onRequestClose={this.toggleWarning}
         />
-<<<<<<< HEAD
         <DropDownMenuView />
         <AddDrinkView />
-=======
->>>>>>> d226d2b0291015cb334b8a8a23c08af3a9c1156f
       </section>
     );
   }

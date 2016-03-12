@@ -10,6 +10,7 @@ import Colors from 'material-ui/lib/styles/colors';
 
 import UIEvents from './../utils/ui-events';
 import UIDispatcher from './../utils/ui-dispatcher';
+import UserStore from './../stores/user-store';
 
 let styles = {
   avatar: {
@@ -19,6 +20,10 @@ let styles = {
   },
   cardActions: {
     textAlign: "center"
+  },
+  cardText: {
+    textAlign: "center",
+    fontSize: '25px'
   }
 };
 
@@ -35,10 +40,12 @@ export default class LeftNavBar extends React.Component {
 
   componentDidMount() {
     UIDispatcher.on(UIEvents.LEFT_NAVBAR_TOGGLE, this.openLeftNavBar);
+    UserStore.register(name => this.setState({ name: name }));
   }
 
   componentWillUnmount() {
     UIDispatcher.removeAllListeners(UIEvents.LEFT_NAVBAR_TOGGLE);
+    UserStore.removeAll();
   }
 
   openLeftNavBar() {
@@ -52,16 +59,14 @@ export default class LeftNavBar extends React.Component {
         <CardActions style={styles.cardActions}>
           <FlatButton label="Log in"
             secondary={true}
-            style={styles.actionButton}
             onTouchTap={() => UIDispatcher.emit(UIEvents.LOGIN_DIALOG_TOGGLE)} />
           <FlatButton label="Sign up"
             primary={true}
-            style={styles.actionButton}
             onTouchTap={() => UIDispatcher.emit(UIEvents.SIGN_UP_DIALOG_TOGGLE)} />
         </CardActions>;
     }
     else {
-      nameSection = <CardText>{ this.state.name }</CardText>;
+      nameSection = <CardText style={styles.cardText}>{ this.state.name }</CardText>;
     }
 
     return (

@@ -2,9 +2,12 @@
  * Created by @tourbillon on 3/11/16.
  */
 
-class UserStore extends EventEmitter {
+import BaseStore from './base-store';
+
+class UserStore extends BaseStore {
 
   constructor() {
+    super();
     this._username = '';
     this._token = '';
   }
@@ -15,7 +18,7 @@ class UserStore extends EventEmitter {
 
   set username(name) {
     this._username = name;
-    this.emit('change');
+    this.emitChanges(name);
   }
 
   set token(tok) { this._token = tok; }

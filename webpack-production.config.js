@@ -32,6 +32,9 @@ var config = {
     new TransferWebpackPlugin([
       {from: 'www'},
     ], path.resolve(__dirname,"src")),
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    })
   ],
   module: {
     preLoaders: [

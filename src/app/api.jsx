@@ -1,4 +1,4 @@
-const serverURL = "http://172.17.87.138:51119/v1/"
+const serverURL = "http://192.168.0.102:51119/v1/"
 
 let instance = null;
 

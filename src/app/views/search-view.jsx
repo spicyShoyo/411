@@ -11,8 +11,9 @@ class SearchView extends React.Component {
 
   handleChange(event) {
     api.drinkTyped(event.target.value).then(res=> {
-        for(let i in res["drinks"]) {
-            console.log(i["drinkname"]);
+        let resArr=res["drinks"];
+        for(let i=0; i<resArr.length; ++i) {
+            console.log(resArr[i]["drinkname"]);
         }
     })
   }

@@ -8,6 +8,3 @@ export default {
   SIGN_UP_DIALOG_TOGGLE: 'event.main.sign_up_dialog_toggle',
   SNACKBAR_TOGGLE: 'event.main.snackbar.toggle'
 };
-
-
-

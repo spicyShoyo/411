@@ -11,13 +11,14 @@ import myTheme from './theme';
 import Colors from 'material-ui/lib/styles/colors';
 
 import NavBar from './views/navbar';
-import SignupView from './views/signup-view'
-import LoginView from './views/login-view'
+import SignupView from './views/signup-view';
+import LoginView from './views/login-view';
 import Snackbar from 'material-ui/lib/snackbar';
+import DropDownMenuView from './views/drop-down-menu-view';
 import LeftNavBar from './views/left-navbar';
 
-import UIDispatcher from './utils/ui-dispatcher'
-import UIEvents from './utils/ui-events'
+import UIDispatcher from './utils/ui-dispatcher';
+import UIEvents from './utils/ui-events';
 
 const muiTheme = getMuiTheme(myTheme);
 
@@ -93,6 +94,7 @@ class Main extends React.Component {
           autoHideDuration={5000}
           onRequestClose={this.toggleWarning}
         />
+        <DropDownMenuView />
       </section>
     );
   }

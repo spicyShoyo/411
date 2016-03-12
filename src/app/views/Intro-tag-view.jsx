@@ -1,24 +1,30 @@
-import React from 'react';
-import belle from 'belle';
-let Card = belle.Card;
+import { Card, CardMedia } from 'material-ui/lib/card';
 
-class IntroTagView extends React.Component {
+const styles = {
+  paper: {
+
+  }
+};
+
+export default class IntroTagView extends React.Component {
+
   constructor(props, context) {
-    super(props, context)
+    super(props, context);
+    this.state = { zDepth: 0 };
   }
 
   render() {
-    return <section className="col-md-4">
-      <Card style={{
-        borderTop: '1px solid #f2f2f2',
-        height: '20%'
-      }}>
-        <i className={this.props.icon}></i>
-
-        <p>{this.props.text}</p>
-      </Card>
-
-    </section>
-  };
+    return (
+      <Paper
+        style={styles.paper}
+        zDepth={this.state.zDepth}>
+        <Card>
+          <CardMedia>
+            <img src={this.props.imageSrc} />
+          </CardMedia>
+          {this.props.children}
+        </Card>
+      </Paper>
+    );
+  }
 }
-export default IntroTagView;

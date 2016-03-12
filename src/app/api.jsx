@@ -35,6 +35,8 @@ let API = {
         ingredienttyped:ingredientTyped
     })
   },
+  addDrink(drinkName, ingredientName) {
+  },
 }
 
 export default API

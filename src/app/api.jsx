@@ -1,6 +1,4 @@
-const serverURL = "http://172.17.87.138:51119/v1/"
-
-let instance = null;
+const serverURL = "http://bac-backend.herokuapp.com/v1/"
 
 let request = (method, key, body) => {
   return fetch(serverURL + key, {
@@ -35,6 +33,9 @@ let API = {
         ingredienttyped:ingredientTyped
     })
   },
+  addDrink(drinkName, ingredientName) {
+    
+  }
 }
 
 export default API

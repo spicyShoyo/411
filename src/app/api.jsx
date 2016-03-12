@@ -1,4 +1,4 @@
-const serverURL = "http://172.17.83.10:51119/v1/"
+const serverURL = "http://172.17.87.138:51119/v1/"
 
 let instance = null;
 
@@ -23,6 +23,11 @@ let API = {
     return request('post', 'login', {
       username: username,
       password: password
+    })
+  },
+  drinkTyped(drinkTyped) {
+    return request('post', 'drinktyped', {
+        drinktyped:drinkTyped
     })
   },
 }

@@ -1,10 +1,4 @@
-<<<<<<< 31ee9ea241d636e7be45c8e8f048721f28337dc6
-const serverURL = "http://172.17.87.138:51119/v1/"
-=======
 const serverURL = "http://bac-backend.herokuapp.com/v1/"
->>>>>>> Added Navbar and changed to event emitter pattern
-
-let instance = null;
 
 let request = (method, key, body) => {
   return fetch(serverURL + key, {

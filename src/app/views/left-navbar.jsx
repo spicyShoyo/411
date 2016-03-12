@@ -33,19 +33,24 @@ export default class LeftNavBar extends React.Component {
     super(props, context);
     this.state = {
       open: false,
-      name: ''
+      name: UserStore.username
     };
+    this.handleNameChange = this.handleNameChange.bind(this);
     this.openLeftNavBar = this.openLeftNavBar.bind(this);
   }
 
   componentDidMount() {
     UIDispatcher.on(UIEvents.LEFT_NAVBAR_TOGGLE, this.openLeftNavBar);
-    UserStore.register(name => this.setState({ name: name }));
+    UserStore.register(this.handleNameChange);
   }
 
   componentWillUnmount() {
     UIDispatcher.removeAllListeners(UIEvents.LEFT_NAVBAR_TOGGLE);
-    UserStore.removeAll();
+    UserStore.remove(this.handleNameChange);
+  }
+
+  handleNameChange(name) {
+    this.setState({ name: name });
   }
 
   openLeftNavBar() {
@@ -66,7 +71,25 @@ export default class LeftNavBar extends React.Component {
         </CardActions>;
     }
     else {
-      nameSection = <CardText style={styles.cardText}>{ this.state.name }</CardText>;
+      nameSection = [
+          <CardTitle
+            key={0}
+            style={styles.cardText}
+            actAsExpander={true}
+            showExpandableButton={true}
+            title={this.state.name} />,
+          <CardActions
+            key={1}
+            style={styles.cardActions}
+            expandable={true}>
+            <FlatButton
+              onTouchTap={() => {
+                UserStore.username = '';
+                UserStore.token = '';
+              }}
+              label="Log out" />
+          </CardActions>
+      ];
     }
 
     return (
@@ -82,7 +105,9 @@ export default class LeftNavBar extends React.Component {
               {this.state.name.substr(0, 1)}
             </Avatar>
           </CardTitle>
+
           { nameSection }
+
         </Card>
         <List>
           <ListItem

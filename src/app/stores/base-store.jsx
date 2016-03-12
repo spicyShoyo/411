@@ -14,6 +14,10 @@ export default class BaseStore extends EventEmitter {
     this.emit('change', c);
   }
 
+  remove(callback) {
+    this.removeListener(callback);
+  }
+
   removeAll() {
     this.removeAllListeners('change');
   }

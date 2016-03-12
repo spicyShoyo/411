@@ -4,24 +4,26 @@
 
 import BaseStore from './base-store';
 
+import Identifiers from './../utils/identifiers';
+
 class UserStore extends BaseStore {
 
-  constructor() {
-    super();
-    this._username = '';
-    this._token = '';
+  get username() {
+    return window.localStorage.getItem(Identifiers.USERNAME_IDENTIFER) || '';
+  }
+  
+  get token() {
+    return window.localStorage.getItem(Identifiers.TOKEN_IDENTIFIER) || '';
   }
 
-  get username() { return this._username; }
-  
-  get token() { return this._token; }
-
   set username(name) {
-    this._username = name;
+    window.localStorage.setItem(Identifiers.USERNAME_IDENTIFER, name);
     this.emitChanges(name);
   }
 
-  set token(tok) { this._token = tok; }
+  set token(tok) {
+    window.localStorage.setItem(Identifiers.TOKEN_IDENTIFIER, tok);
+  }
   
 }
 

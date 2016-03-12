@@ -6,15 +6,10 @@ import React from 'react';
 
 import { LeftNav, Avatar, List, ListItem, FontIcon, FlatButton } from 'material-ui/lib';
 import { Card, CardTitle, CardActions, CardText } from 'material-ui/lib/card';
-<<<<<<< HEAD
-import Colors from 'material-ui/lib/styles/colors';
-
-=======
 import { Link } from 'react-router';
 import Colors from 'material-ui/lib/styles/colors';
 
 import NavLink from './nav-link';
->>>>>>> 2272eca2c3e74f8a84dd2cc5096a3df3082d3754
 import UIEvents from './../utils/ui-events';
 import UIDispatcher from './../utils/ui-dispatcher';
 import UserStore from './../stores/user-store';
@@ -45,16 +40,13 @@ export default class LeftNavBar extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.openLeftNavBar = this.openLeftNavBar.bind(this);
   }
-
-<<<<<<< HEAD
-=======
+  
   static get contextTypes() {
     return {
       router: React.PropTypes.object
     };
   }
 
->>>>>>> 2272eca2c3e74f8a84dd2cc5096a3df3082d3754
   componentDidMount() {
     UIDispatcher.on(UIEvents.LEFT_NAVBAR_TOGGLE, this.openLeftNavBar);
     UserStore.register(this.handleNameChange);
@@ -126,14 +118,6 @@ export default class LeftNavBar extends React.Component {
 
         </Card>
         <List>
-<<<<<<< HEAD
-          <ListItem
-            leftIcon={<FontIcon className="material-icons">home</FontIcon>}
-            primaryText="Home" />
-          <ListItem
-            leftIcon={<FontIcon className="material-icons">search</FontIcon>}
-            primaryText="Search" />
-=======
           <NavLink to="/">
             <ListItem
               leftIcon={<FontIcon className="material-icons">home</FontIcon>}
@@ -145,7 +129,6 @@ export default class LeftNavBar extends React.Component {
               leftIcon={<FontIcon className="material-icons">search</FontIcon>}
               primaryText="Search" />
           </NavLink>
->>>>>>> 2272eca2c3e74f8a84dd2cc5096a3df3082d3754
         </List>
       </LeftNav>
     );

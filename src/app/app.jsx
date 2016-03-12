@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './main'; // Our custom react component
 import Home from './home';
+import Dashboard from './dashboard';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -17,6 +18,7 @@ ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={Main}>
       <IndexRoute component={Home} />
+      <Route path="dashboard" component={Dashboard} />
     </Route>
   </Router>
   ), document.getElementById('app'));

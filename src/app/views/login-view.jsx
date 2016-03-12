@@ -8,6 +8,7 @@ import api from '../api.jsx';
 
 import UIEvents from './../utils/ui-events';
 import UIDispatcher from './../utils/ui-dispatcher';
+import UserStore from './../stores/user-store';
 
 const styles = {
   container: {
@@ -94,6 +95,7 @@ class SignupView extends React.Component {
         console.log(res.token)
         UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Login successful')
         UIDispatcher.emit(UIEvents.LOGIN_DIALOG_TOGGLE)
+        UserStore.username = this.state.username;
       }).catch(err => {
         console.log(`Error during login: ${err}`);
         UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Submission failed! Please check your username and password entered!')

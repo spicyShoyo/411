@@ -6,6 +6,9 @@ import Snackbar from 'material-ui/lib/snackbar';
 import Colors from 'material-ui/lib/styles/colors';
 import api from '../api.jsx';
 
+import UIEvents from './../utils/ui-events';
+import UIDispatcher from './../utils/ui-dispatcher';
+
 const styles = {
   container: {
     width: '100%',
@@ -56,7 +59,6 @@ class SignupView extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
     this.didFinishTextField = this.didFinishTextField.bind(this)
-    this.warningDidClosed = this.warningDidClosed.bind(this)
   }
 
   handleChange(event) {
@@ -69,7 +71,7 @@ class SignupView extends React.Component {
     let text = event.target.value
     switch (event.target.id) {
       case 'username':
-        if (text.length <= 3)
+        if (text.length < 3)
           this.setState({usernameError: 'Username should have at least 3 characters!'})
         else
           this.setState({usernameError: ''})
@@ -97,16 +99,17 @@ class SignupView extends React.Component {
   handleSubmit() {
     if (this.state.validate === true) {
       api.signupRequest(this.state.username, this.state.password)
-      .then((res) => {
-        console.log(res.token)
-        this.props.invokeWarning("Sign Up Succeed!")
-        this.props.afterSubmit()
-      }).catch((err) => {
-        this.props.invokeWarning("Submission failed! Please check your username and password entered!")
-      })
+        .then((res) => {
+          console.log(res.token)
+          UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Sign up successful')
+          UIDispatcher.emit(UIEvents.SIGN_UP_DIALOG_TOGGLE)
+        }).catch(err => {
+        console.log(`Error during login: ${err}`);
+        UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Submission failed! Please check your username and password entered!')
+      });
     }
     else {
-      this.props.invokeWarning("Submission failed! Please check your username and password entered!")
+      UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Submission failed! Please check your username and password entered!')
     }
   }
 
@@ -121,10 +124,6 @@ class SignupView extends React.Component {
       confirmPasswordError: '',
     })
     this.props.afterSubmit()
-  }
-
-  warningDidClosed() {
-    this.setState({warningInvoked: false})
   }
 
   render() {

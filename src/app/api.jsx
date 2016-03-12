@@ -30,6 +30,11 @@ let API = {
         drinktyped:drinkTyped
     })
   },
+  ingredientTyped(ingredientTyped) {
+    return request('post', 'ingredienttyped', {
+        ingredienttyped:ingredientTyped
+    })
+  },
 }
 
 export default API

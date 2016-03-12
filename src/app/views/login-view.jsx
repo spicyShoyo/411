@@ -44,7 +44,7 @@ const styles = {
   }
 }
 
-class SignupView extends React.Component {
+class LoginView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -56,6 +56,7 @@ class SignupView extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.doSubmit = this.doSubmit.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
     this.didFinishTextField = this.didFinishTextField.bind(this)
   }
@@ -88,21 +89,29 @@ class SignupView extends React.Component {
       this.setState({validate: true})
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
+    event.preventDefault();
+    this.doSubmit();
+  }
+
+  doSubmit() {
     if (this.state.validate === true) {
       api.loginRequest(this.state.username, this.state.password)
-      .then(res => {
-        console.log(res.token)
-        UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Login successful')
-        UIDispatcher.emit(UIEvents.LOGIN_DIALOG_TOGGLE)
-        UserStore.username = this.state.username;
-      }).catch(err => {
+        .then(res => {
+          console.log(res.token)
+          UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Login successful')
+          UIDispatcher.emit(UIEvents.LOGIN_DIALOG_TOGGLE)
+          UserStore.username = this.state.username;
+        }).catch(err => {
         console.log(`Error during login: ${err}`);
-        UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Submission failed! Please check your username and password entered!')
+        UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, "Oops, we're experiencing a network problem")
       });
     }
     else {
-      UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Submission failed! Please check your username and password entered!')
+      if (this.state.username.length < 3)
+        this.setState({usernameError: 'Username should have at least 3 characters!'})
+      if (this.state.password.length < 6)
+        this.setState({passwordError: 'Password length should be greater than 6 characters!'})
     }
   }
 
@@ -134,35 +143,39 @@ class SignupView extends React.Component {
               label="Submit"
               primary={true}
               keyboardFocused={true}
-              onTouchTap={this.handleSubmit}
+              onTouchTap={this.doSubmit}
             />
           ]}
           modal={false}
           open={this.props.open}
-          titleStyle={styles.titleView} >
+          titleStyle={styles.titleView}
+          onRequestClose={this.handleCancel}>
           <section style={styles.backgroundMask} />
           <section style={styles.view}>
-            <TextField
-              style={styles.textField}
-              hintText="Username Field"
-              floatingLabelText="Username"
-              id="username"
-              onChange={this.handleChange}
-              onBlur={this.didFinishTextField}
-              value={this.state.username}
-              errorText={this.state.usernameError}
-            />
-            <TextField
-              style={styles.textField}
-              hintText="Password Field"
-              floatingLabelText="Password"
-              type="password"
-              id="password"
-              onChange={this.handleChange}
-              onBlur={this.didFinishTextField}
-              value={this.state.password}
-              errorText={this.state.passwordError}
-            />
+            <form onSubmit={this.handleSubmit}>
+              <TextField
+                style={styles.textField}
+                hintText="Username Field"
+                floatingLabelText="Username"
+                id="username"
+                onChange={this.handleChange}
+                onBlur={this.didFinishTextField}
+                value={this.state.username}
+                errorText={this.state.usernameError}
+              />
+              <TextField
+                style={styles.textField}
+                hintText="Password Field"
+                floatingLabelText="Password"
+                type="password"
+                id="password"
+                onChange={this.handleChange}
+                onBlur={this.didFinishTextField}
+                value={this.state.password}
+                errorText={this.state.passwordError}
+              />
+              <button type="submit" hidden />
+            </form>
           </section>
         </Dialog>
       </section>
@@ -170,4 +183,4 @@ class SignupView extends React.Component {
   }
 }
 
-export default SignupView;
+export default LoginView;

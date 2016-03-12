@@ -58,6 +58,7 @@ class SignupView extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.doSubmit = this.doSubmit.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
     this.didFinishTextField = this.didFinishTextField.bind(this)
   }
@@ -69,22 +70,24 @@ class SignupView extends React.Component {
   }
 
   didFinishTextField(event) {
+    if (typeof event.target.value !== 'string')
+      return;
     let text = event.target.value
     switch (event.target.id) {
       case 'username':
-        if (text.length < 3)
+        if (text.length !== 0 && text.length < 3)
           this.setState({usernameError: 'Username should have at least 3 characters!'})
         else
           this.setState({usernameError: ''})
         break;
       case 'password':
-        if (text.length < 6)
+        if (text.length !== 0 && text.length < 6)
           this.setState({passwordError: 'Password length should be greater than 6 characters!'})
         else
           this.setState({passwordError: ''})
         break;
       case 'confirmPassword':
-        if (text !== this.state.password)
+        if (text.length !== 0 && text !== this.state.password)
           this.setState({confirmPasswordError: 'Confirm password should match the password!'})
         else
           this.setState({confirmPasswordError: ''})
@@ -95,23 +98,33 @@ class SignupView extends React.Component {
 
     if (this.state.username.length > 3 && this.state.password.length >= 6 && this.state.password.value === this.state.confirmPassword.value)
       this.setState({validate: true})
+    else
+      this.setState({validate: false})
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
+    event.preventDefault();
+    this.doSubmit();
+  }
+
+  doSubmit() {
     if (this.state.validate === true) {
       api.signupRequest(this.state.username, this.state.password)
-        .then((res) => {
+        .then(res => {
           console.log(res.token)
           UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Sign up successful')
           UIDispatcher.emit(UIEvents.SIGN_UP_DIALOG_TOGGLE)
           UserStore.username = this.state.username;
         }).catch(err => {
         console.log(`Error during login: ${err}`);
-        UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Submission failed! Please check your username and password entered!')
+        UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, "Oops, we're experiencing a network problem")
       });
     }
     else {
-      UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Submission failed! Please check your username and password entered!')
+      if (this.state.username.length < 3)
+        this.setState({usernameError: 'Username should have at least 3 characters!'})
+      if (this.state.password.length < 6)
+        this.setState({passwordError: 'Password length should be greater than 6 characters!'})
     }
   }
 
@@ -145,48 +158,51 @@ class SignupView extends React.Component {
               label="Submit"
               primary={true}
               keyboardFocused={true}
-              onTouchTap={this.handleSubmit}
-            />,
+              onTouchTap={this.doSubmit}
+            />
           ]}
           modal={false}
           open={this.props.open}
           titleStyle={styles.titleView}
-        >
+          onRequestClose={this.handleCancel}>
           <section style={styles.backgroundMask}>
           </section>
           <section style={styles.view}>
-            <TextField
-              style={styles.textField}
-              hintText="Username Field"
-              floatingLabelText="Username"
-              id="username"
-              onChange={this.handleChange}
-              onBlur={this.didFinishTextField}
-              value={this.state.username}
-              errorText={this.state.usernameError}
-            />
-            <TextField
-              style={styles.textField}
-              hintText="Password Field"
-              floatingLabelText="Password"
-              type="password"
-              id="password"
-              onChange={this.handleChange}
-              onBlur={this.didFinishTextField}
-              value={this.state.password}
-              errorText={this.state.passwordError}
-            />
-            <TextField
-              style={styles.textField}
-              hintText="Confirm Password Field"
-              floatingLabelText="Confirm Password"
-              type="password"
-              id="confirmPassword"
-              onChange={this.handleChange}
-              onBlur={this.didFinishTextField}
-              value={this.state.confirmPassword}
-              errorText={this.state.confirmPasswordError}
-            />
+            <form onSubmit={this.handleSubmit}>
+              <TextField
+                style={styles.textField}
+                hintText="Username Field"
+                floatingLabelText="Username"
+                id="username"
+                onChange={this.handleChange}
+                onBlur={this.didFinishTextField}
+                value={this.state.username}
+                errorText={this.state.usernameError}
+              />
+              <TextField
+                style={styles.textField}
+                hintText="Password Field"
+                floatingLabelText="Password"
+                type="password"
+                id="password"
+                onChange={this.handleChange}
+                onBlur={this.didFinishTextField}
+                value={this.state.password}
+                errorText={this.state.passwordError}
+              />
+              <TextField
+                style={styles.textField}
+                hintText="Confirm Password Field"
+                floatingLabelText="Confirm Password"
+                type="password"
+                id="confirmPassword"
+                onChange={this.handleChange}
+                onBlur={this.didFinishTextField}
+                value={this.state.confirmPassword}
+                errorText={this.state.confirmPasswordError}
+              />
+              <button type="submit" hidden />
+            </form>
           </section>
         </Dialog>
       </section>

@@ -14,6 +14,8 @@ import NavBar from './views/navbar';
 import SignupView from './views/signup-view'
 import LoginView from './views/login-view'
 import Snackbar from 'material-ui/lib/snackbar';
+import IntroTagView from './Views/intro-tag-view';
+import SearchView from './Views/search-view'
 
 import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'
@@ -83,6 +85,16 @@ class Main extends React.Component {
           autoHideDuration={4000}
           onRequestClose={this.toggleWarning}
         />
+        <IntroTagView icon="glyphicon glyphicon-user"
+        text="Bacchanalia Bacchanalia Bacchanalia Bacchanalia Bacchanalia"
+        />
+        <IntroTagView icon="glyphicon glyphicon-play"
+        text="Bacchanalia Bacchanalia Bacchanalia Bacchanalia Bacchanalia"
+        />
+        <IntroTagView icon="glyphicon glyphicon-info-sign"
+        text="Bacchanalia Bacchanalia Bacchanalia Bacchanalia Bacchanalia"
+        />
+    <SearchView />
       </section>
     );
   }

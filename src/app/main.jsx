@@ -15,7 +15,8 @@ import SignupView from './views/signup-view'
 import LoginView from './views/login-view'
 import Snackbar from 'material-ui/lib/snackbar';
 import IntroTagView from './Views/intro-tag-view';
-import SearchView from './Views/search-view'
+import SearchView from './Views/search-view';
+import DrinkSearchView from './Views/drink-search-view';
 
 import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'
@@ -94,7 +95,7 @@ class Main extends React.Component {
         <IntroTagView icon="glyphicon glyphicon-info-sign"
         text="Bacchanalia Bacchanalia Bacchanalia Bacchanalia Bacchanalia"
         />
-    <SearchView />
+    <DrinkSearchView />
       </section>
     );
   }

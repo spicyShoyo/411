@@ -2,23 +2,28 @@
  * Created by @tourbillon on 3/11/16.
  */
 
-class UserStore extends EventEmitter {
+import BaseStore from './base-store';
 
-  constructor() {
-    this._username = '';
-    this._token = '';
+import Identifiers from './../utils/identifiers';
+
+class UserStore extends BaseStore {
+
+  get username() {
+    return window.localStorage.getItem(Identifiers.USERNAME_IDENTIFER) || '';
   }
-
-  get username() { return this._username; }
   
-  get token() { return this._token; }
+  get token() {
+    return window.localStorage.getItem(Identifiers.TOKEN_IDENTIFIER) || '';
+  }
 
   set username(name) {
-    this._username = name;
-    this.emit('change');
+    window.localStorage.setItem(Identifiers.USERNAME_IDENTIFER, name);
+    this.emitChanges(name);
   }
 
-  set token(tok) { this._token = tok; }
+  set token(tok) {
+    window.localStorage.setItem(Identifiers.TOKEN_IDENTIFIER, tok);
+  }
   
 }
 

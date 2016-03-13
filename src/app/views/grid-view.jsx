@@ -4,8 +4,8 @@ import GridTile from 'material-ui/lib/grid-list/grid-tile';
 import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
 import IconButton from 'material-ui/lib/icon-button';
 
-import UIDispatcher from './utils/ui-dispatcher'
-import UIEvents from './utils/ui-events'
+import UIDispatcher from '../utils/ui-dispatcher'
+import UIEvents from '../utils/ui-events'
 
 const styles = {
   root: {
@@ -67,15 +67,18 @@ const tilesData = [
   },
 ];
 
-class GridListView {
-  constructor(props) {
-    super(props)
+class GridListView extends React.Component {
+  constructor(props, context) {
+    super(props, context)
     UIDispatcher.on(UIEvents.GRID_LIST_REFRESH, this.refreshDrinks);
+    this.state = {
+      drinks: tilesData
+    }
     this.refreshDrinks = this.refreshDrinks.bind(this);
   }
 
   refreshDrinks() {
-    
+
   }
 
   render() {
@@ -87,7 +90,7 @@ class GridListView {
           padding={1}
           style={styles.gridList}
         >
-          {tilesData.map(tile => (
+          {this.state.drinks.map(tile => (
             <GridTile
               key={tile.img}
               title={tile.title}

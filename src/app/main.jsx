@@ -96,8 +96,6 @@ class Main extends React.Component {
           autoHideDuration={5000}
           onRequestClose={this.toggleWarning}
         />
-        <DropDownMenuView />
-        <AddDrinkView />
       </section>
     );
   }

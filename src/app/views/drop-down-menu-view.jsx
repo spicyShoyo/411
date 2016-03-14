@@ -1,7 +1,7 @@
-import React from 'react';
-import DropDownMenu from 'material-ui/lib/DropDownMenu';
-import AutoComplete from 'material-ui/lib/auto-complete';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import React from 'react'
+import DropDownMenu from 'material-ui/lib/DropDownMenu'
+import AutoComplete from 'material-ui/lib/auto-complete'
+import MenuItem from 'material-ui/lib/menus/menu-item'
 
 export default class DropDownMenuView extends React.Component {
 
@@ -16,40 +16,40 @@ export default class DropDownMenuView extends React.Component {
   }
 
   handleChange(event, index, value) {
-    this.setState({value});
+    this.setState({value})
     if (value === 1)
-      this.setState({hintText: "Search for Ingredient"});
+      this.setState({hintText: "Search for Ingredient"})
     else if (value === 2)
-      this.setState({hintText: "Search for Drink"});
+      this.setState({hintText: "Search for Drink"})
   }
 
   handleUpdateInput(t) {
     if (this.state.hintText === "Drink") {
       if (t === '') {
-          this.setState({dataSource: []});
+          this.setState({dataSource: []})
       }
       api.drinkTyped(t).then(res => {
-          let resArr = res["drinks"];
-          let newArr = [];
+          let resArr = res["drinks"]
+          let newArr = []
           for (let i = 0; i < resArr.length; ++i) {
-              newArr.push(resArr[i]["drinkname"]);
-              console.log(resArr[i]["drinkname"]);
+              newArr.push(resArr[i]["drinkname"])
+              console.log(resArr[i]["drinkname"])
           }
-          this.setState({dataSource: newArr});
+          this.setState({dataSource: newArr})
       })
     }
     else if (this.state.hintText === "Ingredient") {
       if (t === '') {
-          this.setState({dataSource: []});
+          this.setState({dataSource: []})
       }
       api.ingredientTyped(t).then(res => {
-          let resArr = res["ingredients"];
+          let resArr = res["ingredients"]
           let newArr = [];
           for (let i = 0; i < resArr.length; ++i) {
-              newArr.push(resArr[i]["ingredientname"]);
-              console.log(resArr[i]["ingredientname"]);
+              newArr.push(resArr[i]["ingredientname"])
+              console.log(resArr[i]["ingredientname"])
           }
-          this.setState({dataSource: newArr});
+          this.setState({dataSource: newArr})
       })
     }
   };

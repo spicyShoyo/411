@@ -1,5 +1,6 @@
 import React from 'react';
 import GridView from './views/grid-view'
+import DropDownMenuView from './views/drop-down-menu-view'
 
 import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'

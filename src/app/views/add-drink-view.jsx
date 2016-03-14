@@ -1,7 +1,14 @@
 import React from 'react';
+import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 import AutoComplete from 'material-ui/lib/auto-complete';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+
+const styles = {
+  button: {
+    margin: 12,
+  },
+};
 
 export default class AddDrinkView extends React.Component {
 
@@ -11,6 +18,7 @@ export default class AddDrinkView extends React.Component {
       drinkName: "",
       hintText: "Search for Ingredient",
       drinkNameError: "",
+      ingredientNames: [],
       dataSource: []};
       this.handleEnterKeyDown = this.handleEnterKeyDown.bind(this);
       this.handleUpdateInput = this.handleUpdateInput.bind(this);
@@ -38,8 +46,10 @@ export default class AddDrinkView extends React.Component {
   };
 
   handleNewRequest(t) {
-    if (t !== '')
+    if (t !== '') {
       api.addDrink(this.state.drinkName, t);
+      this.setState({ingredientNames: ingredientNames.append(t)});
+    }
   }
 
   render() {
@@ -50,41 +60,21 @@ export default class AddDrinkView extends React.Component {
                  errorText={this.state.drinkNameError}
       />
       <br/>
-      <AutoComplete hintText="Add Ingredient 1"
+      <AutoComplete hintText="Add Ingredient"
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={this.state.dataSource}
                     onUpdateInput={this.handleUpdateInput}
                     onNewRequest={this.handleNewRequest}
       />
       <br/>
-      <AutoComplete hintText="Add Ingredient 2"
-                    filter={AutoComplete.caseInsensitiveFilter}
-                    dataSource={this.state.dataSource}
-                    onUpdateInput={this.handleUpdateInput}
-                    onNewRequest={this.handleNewRequest}
-      />
-      <br/>
-      <AutoComplete hintText="Add Ingredient 3"
-                    filter={AutoComplete.caseInsensitiveFilter}
-                    dataSource={this.state.dataSource}
-                    onUpdateInput={this.handleUpdateInput}
-                    onNewRequest={this.handleNewRequest}
-      />
-      <br/>
-      <AutoComplete hintText="Add Ingredient 4"
-                    filter={AutoComplete.caseInsensitiveFilter}
-                    dataSource={this.state.dataSource}
-                    onUpdateInput={this.handleUpdateInput}
-                    onNewRequest={this.handleNewRequest}
-      />
-      <br/>
-      <AutoComplete hintText="Add Ingredient 5"
-                    filter={AutoComplete.caseInsensitiveFilter}
-                    dataSource={this.state.dataSource}
-                    onUpdateInput={this.handleUpdateInput}
-                    onNewRequest={this.handleNewRequest}
-      />
-      <br/>
+      <section>
+        {this.state.ingredientNames.map(tile => (
+          <RaisedButton label={this.state.ingredientNames}
+                        style={styles.button}
+          >
+          </RaisedButton>
+        ))}
+      </section>
       </section>
     );
   }

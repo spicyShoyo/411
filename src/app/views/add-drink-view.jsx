@@ -24,7 +24,8 @@ export default class AddDrinkView extends React.Component {
       hintText: "Search for Ingredient",
       drinkNameError: "",
       ingredientNames: [],
-      dataSource: []};
+      dataSource: [],
+      buttons: []};
       this.handleEnterKeyDown = this.handleEnterKeyDown.bind(this);
       this.handleUpdateInput = this.handleUpdateInput.bind(this);
       this.handleNewRequest = this.handleNewRequest.bind(this);
@@ -53,8 +54,12 @@ export default class AddDrinkView extends React.Component {
   handleNewRequest(t) {
     if (t !== '') {
       api.addDrink(this.state.drinkName, t, defaultCategory, defaultGlass);
-      this.setState({ingredientNames: ingredientNames.append(t)});
-    }
+      this.setState({ingredientNames: this.state.ingredientNames.concat(t)});
+      this.state.buttons.push(<div> <RaisedButton label={t}
+                                            style={styles.button}>
+                              </RaisedButton>
+                              </div>);
+      }
   }
 
   render() {
@@ -72,14 +77,8 @@ export default class AddDrinkView extends React.Component {
                     onNewRequest={this.handleNewRequest}
       />
       <br/>
-      <section>
-        {this.state.ingredientNames.map(tile => (
-          <RaisedButton label={this.state.ingredientNames}
-                        style={styles.button}
-          >
-          </RaisedButton>
-        ))}
-      </section>
+      {this.state.buttons
+      }
       </section>
     );
   }

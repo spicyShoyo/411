@@ -40,7 +40,19 @@ let API = {
         catetory: category,
         glass: glass
     })
-},
+  },
+  likeADrink(userName, drinkName) {
+    return request('post', 'like', {
+      username: userName,
+      drinkname: drinkName
+    })
+  },
+  unlikeADrink(userName, drinkName) {
+    return request('post', 'unlike', {
+      username: userName,
+      drinkname: drinkName
+    })
+  },
   random() {
       return request('get', 'random');
   },

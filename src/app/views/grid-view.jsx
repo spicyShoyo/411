@@ -4,6 +4,7 @@ import GridTile from 'material-ui/lib/grid-list/grid-tile';
 import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
 import IconButton from 'material-ui/lib/icon-button';
 import api from '../api.jsx';
+import UserStore from '../stores/user-store'
 import UIDispatcher from '../utils/ui-dispatcher'
 import UIEvents from '../utils/ui-events'
 
@@ -21,6 +22,80 @@ const styles = {
     marginBottom: 24,
   },
 };
+
+class GridListView extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    UIDispatcher.on(UIEvents.GRID_LIST_REFRESH, this.refreshDrinks);
+    this.state = {
+      drinks: tilesData,
+      likedDrinks: []
+    }
+    this.refreshDrinks = this.refreshDrinks.bind(this);
+  }
+
+  componentWillMount() {
+      this.refreshDrinks();
+  }
+
+  refreshDrinks() {
+      api.random().then(res => {
+          let resArr = res["drinks"];
+          this.setState({ drinks: resArr });
+      })
+  }
+
+  render() {
+    return (
+      <div style={styles.root}>
+        <GridList
+          cols={2}
+          cellHeight={225}
+          padding={1}
+          style={styles.gridList}
+        >
+          {this.state.drinks.map(tile => (
+            <GridTile
+              key={tile.url}
+              title={tile.drinkname}
+              subtitle={tile.category}
+              actionIcon={
+                <IconButton
+                  onClick={() => {
+                    if (this.state.likedDrinks.filter(n => n === tile.drinkname).length === 0) {
+                      this.setState({likedDrinks: this.state.likedDrinks.concat([tile.drinkname])})
+                      api.likeADrink(UserStore.username, tile.drinkname)
+                        .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
+                        .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
+                    } else {
+                      this.setState({likedDrinks: this.state.likedDrinks.reduce((a, c) => {
+                        if (c === tile.drinkname) return a
+                        else return a.concat([c])
+                      }, [])})
+                      api.unlikeADrink(UserStore.username, tile.drinkname)
+                        .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
+                        .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
+                    }
+                  }}>
+                  <StarBorder color="white"/>
+                </IconButton>
+              }
+              actionPosition="left"
+              titlePosition="top"
+              titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+              cols={tile.featured ? 2 : 1}
+              rows={tile.featured ? 2 : 1}
+            >
+              <img src={tile.url} />
+            </GridTile>
+          ))}
+        </GridList>
+      </div>
+    );
+  }
+}
+
+export default GridListView;
 
 const tilesData = [
     {
@@ -184,56 +259,3 @@ const tilesData = [
       "featured": false
   },
 ];
-
-class GridListView extends React.Component {
-  constructor(props, context) {
-    super(props, context)
-    UIDispatcher.on(UIEvents.GRID_LIST_REFRESH, this.refreshDrinks);
-    this.state = {
-      drinks: tilesData
-    }
-    this.refreshDrinks = this.refreshDrinks.bind(this);
-  }
-
-  componentWillMount() {
-      this.refreshDrinks();
-  }
-
-  refreshDrinks() {
-      api.random().then(res => {
-          let resArr = res["drinks"];
-          this.setState({ drinks: resArr });
-      })
-  }
-
-  render() {
-    return (
-      <div style={styles.root}>
-        <GridList
-          cols={2}
-          cellHeight={225}
-          padding={1}
-          style={styles.gridList}
-        >
-          {this.state.drinks.map(tile => (
-            <GridTile
-              key={tile.url}
-              title={tile.drinkname}
-              subtitle={tile.category}
-              actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-              actionPosition="left"
-              titlePosition="top"
-              titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-              cols={tile.featured ? 2 : 1}
-              rows={tile.featured ? 2 : 1}
-            >
-              <img src={tile.url} />
-            </GridTile>
-          ))}
-        </GridList>
-      </div>
-    );
-  }
-}
-
-export default GridListView;

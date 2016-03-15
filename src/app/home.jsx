@@ -18,23 +18,15 @@ import UserStore from './stores/user-store';
 
 const styles = {
   tagSection: {
-    display: 'block',
-    marginLeft: 'auto',
-    marginRight: 'auto',
     marginTop: '5px',
-    paddingTop: '10px',
-    paddingBottom: '10px',
-    paddingLeft: '5px',
-    paddingRight: '5px'
+    zIndex: 0
   },
   tagTable: {
+    width: '100%',
     margin: '0 auto'
   },
   tagTableData: {
-    paddingTop: '10px',
-    paddingBottom: '10px',
-    paddingLeft: '10px',
-    paddingRight: '10px'
+    padding: '20px'
   }
 };
 
@@ -71,19 +63,19 @@ export default React.createClass({
               <tr>
                 <td style={styles.tagTableData}>
                   <IntroTagView
-                    imageSrc="http://lorempixel.com/300/200/nature">
+                    imageSrc="http://lorempixel.com/200/150/nature">
                     Ha!
                   </IntroTagView>
                 </td>
                 <td style={styles.tagTableData}>
                   <IntroTagView
-                    imageSrc="http://lorempixel.com/300/200/nature">
+                    imageSrc="http://lorempixel.com/200/150/nature">
                     Ha!
                   </IntroTagView>
                 </td>
                 <td style={styles.tagTableData}>
                   <IntroTagView
-                    imageSrc="http://lorempixel.com/300/200/nature">
+                    imageSrc="http://lorempixel.com/200/150/nature">
                     Ha!
                   </IntroTagView>
                 </td>

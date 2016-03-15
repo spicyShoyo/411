@@ -7,16 +7,17 @@ import NavBar from './views/navbar'
 import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'
 
+import AuthMixin from './mixins/auth-mixin'
+
 const styles = {
   container: {
     backgroundColor: '#f7f7f7'
   },
 };
 
-export default class Dashboard extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-  }
+export default React.createClass({
+
+  mixins: [AuthMixin],
 
   render() {
     return (
@@ -28,4 +29,4 @@ export default class Dashboard extends React.Component {
       </div>
     );
   }
-}
+});

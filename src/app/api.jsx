@@ -34,8 +34,11 @@ let API = {
     })
   },
   addDrink(drinkName, ingredientName) {
-    
-  }
+
+  },
+  random() {
+      return request('get', 'random');
+  },
 }
 
 export default API

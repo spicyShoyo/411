@@ -10,16 +10,16 @@ export default class DropDownMenuView extends React.Component {
     this.state = {
       hintText: "Search for Drink",
       dataSource: [],
-      value: 2};
+      value: 1};
       this.handleChange = this.handleChange.bind(this);
       this.handleUpdateInput = this.handleUpdateInput.bind(this);
   }
 
   handleChange(event, index, value) {
     this.setState({value})
-    if (value === 1)
+    if (value === 2)
       this.setState({hintText: "Search for Ingredient"})
-    else if (value === 2)
+    else if (value === 1)
       this.setState({hintText: "Search for Drink"})
   }
 
@@ -58,13 +58,14 @@ export default class DropDownMenuView extends React.Component {
     return (
       <section>
       <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-        <MenuItem value={1} primaryText="Ingredient"/>
-        <MenuItem value={2} primaryText="Drink"/>
+        <MenuItem value={1} primaryText="Drink"/>
+        <MenuItem value={2} primaryText="Ingredient"/>
       </DropDownMenu>
       <AutoComplete hintText={this.state.hintText}
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={this.state.dataSource}
                     onUpdateInput={this.handleUpdateInput}
+                    style={this.props.style}
       />
       </section>
     );

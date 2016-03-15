@@ -34,6 +34,7 @@ export default class DrinkSearchView extends React.Component {
         return (<AutoComplete hintText="sEarch dRink hEre!"
                               filter={AutoComplete.caseInsensitiveFilter}
                               dataSource={this.state.dataSource}
-                              onUpdateInput={this.handleUpdateInput}/>);
+                              onUpdateInput={this.handleUpdateInput}
+                              style={this.props.style}/>);
     }
 }

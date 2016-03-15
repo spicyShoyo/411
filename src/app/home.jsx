@@ -10,21 +10,43 @@ import UIEvents from './utils/ui-events'
 import HeaderView from './views/header-view'
 import HeaderImageGallery from './views/header-image-gallery'
 import IntroTagView from './views/intro-tag-view';
-// import SearchView from './Views/search-view';
 
-import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/lib/table';
+import NavBar from './views/navbar'
 
-const styles= {
-  tag: {
-    display: 'inline'
+import UserStore from './stores/user-store';
+
+const styles = {
+  tagSection: {
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '5px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
+    paddingLeft: '5px',
+    paddingRight: '5px'
+  },
+  tagTable: {
+    margin: '0 auto'
+  },
+  tagTableData: {
+    paddingTop: '10px',
+    paddingBottom: '10px',
+    paddingLeft: '10px',
+    paddingRight: '10px'
   }
 };
 
-export default class Home extends React.Component {
+class Home extends React.Component {
 
   constructor(props, context) {
     super(props, context);
     this.centralButtonOnClick = this.centralButtonOnClick.bind(this);
+  }
+
+  componentWillMount() {
+    if (UserStore.username.length !== 0)
+      window.location.href = '/dashboard';
   }
 
   centralButtonOnClick() {
@@ -34,31 +56,44 @@ export default class Home extends React.Component {
   render() {
     return (
       <div>
+        <NavBar
+          title="Bacchanalia"
+          transparent={true} />
         <HeaderImageGallery />
         <HeaderView centralBtnTap={this.centralButtonOnClick} />
-        <Table>
-          <TableRow>
-            <TableRowColumn>
-              <IntroTagView
-                imageSrc="http://lorempixel.com/300/200">
-                Ha!
-              </IntroTagView>
-            </TableRowColumn>
-            <TableRowColumn>
-              <IntroTagView
-                imageSrc="http://lorempixel.com/300/200">
-                Ha!
-              </IntroTagView>
-            </TableRowColumn>
-            <TableRowColumn>
-              <IntroTagView
-                imageSrc="http://lorempixel.com/300/200">
-                Ha!
-              </IntroTagView>
-            </TableRowColumn>
-          </TableRow>
-        </Table>
+        <section style={styles.tagSection}>
+          <table style={styles.tagTable}>
+            <tbody>
+              <tr>
+                <td style={styles.tagTableData}>
+                  <IntroTagView
+                    imageSrc="http://lorempixel.com/300/200/nature">
+                    Ha!
+                  </IntroTagView>
+                </td>
+                <td style={styles.tagTableData}>
+                  <IntroTagView
+                    imageSrc="http://lorempixel.com/300/200/nature">
+                    Ha!
+                  </IntroTagView>
+                </td>
+                <td style={styles.tagTableData}>
+                  <IntroTagView
+                    imageSrc="http://lorempixel.com/300/200/nature">
+                    Ha!
+                  </IntroTagView>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
       </div>
     )
   }
 }
+
+Home.contextTypes = {
+  router: React.PropTypes.object
+};
+
+export default Home;

@@ -12,13 +12,25 @@ import Dashboard from './dashboard';
 //https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
+class App extends React.Component {
+
+  constructor(props, context) {
+    super(props, context);
+  }
+
+  render() {
+    return (
+      <Router history={browserHistory}>
+        <Route path="/" component={Main}>
+          <IndexRoute component={Home} />
+          <Route path="dashboard" component={Dashboard} />
+        </Route>
+      </Router>
+    );
+  }
+
+}
+
 // Render the main app react component into the app div.
 // For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
-ReactDOM.render((
-  <Router history={browserHistory}>
-    <Route path="/" component={Main}>
-      <IndexRoute component={Home} />
-      <Route path="dashboard" component={Dashboard} />
-    </Route>
-  </Router>
-  ), document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));

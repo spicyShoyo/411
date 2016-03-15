@@ -61,6 +61,10 @@ class LoginView extends React.Component {
     this.didFinishTextField = this.didFinishTextField.bind(this)
   }
 
+  static get contextTypes() {
+    return { router: React.PropTypes.object };
+  }
+
   handleChange(event) {
     let temp = {}
     temp[event.target.id] = event.target.value
@@ -102,6 +106,7 @@ class LoginView extends React.Component {
           UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Login successful')
           UIDispatcher.emit(UIEvents.LOGIN_DIALOG_TOGGLE)
           UserStore.username = this.state.username;
+          window.location.href = '/dashboard';
         }).catch(err => {
         console.log(`Error during login: ${err}`);
         UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, "Oops, we're experiencing a network problem")

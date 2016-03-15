@@ -72,20 +72,9 @@ class Main extends React.Component {
   render() {
     return (
       <section>
-        <SignupView
-          open={this.state.signupModalOpen}
-          afterSubmit={this.toggleSignupModal}
-          invokeWarning={this.setWarning}
-        />
-        <LoginView
-          open={this.state.loginModalOpen}
-          afterSubmit={this.toggleLoginModal}
-          invokeWarning={this.setWarning}
-        />
+        <SignupView open={this.state.signupModalOpen} />
+        <LoginView open={this.state.loginModalOpen} />
         <LeftNavBar />
-        <NavBar
-          title="Bacchanalia"
-          transparent={window.location.pathname === '/'} />
 
         { this.props.children }
 

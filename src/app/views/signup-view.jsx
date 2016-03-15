@@ -63,6 +63,10 @@ class SignupView extends React.Component {
     this.didFinishTextField = this.didFinishTextField.bind(this)
   }
 
+  static get contextTypes() {
+    return { router: React.PropTypes.object };
+  }
+
   handleChange(event) {
     let temp = {}
     temp[event.target.id] = event.target.value
@@ -115,6 +119,8 @@ class SignupView extends React.Component {
           UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, 'Sign up successful')
           UIDispatcher.emit(UIEvents.SIGN_UP_DIALOG_TOGGLE)
           UserStore.username = this.state.username;
+          UIDispatcher.emit(UIEvents.LEFT_NAVBAR_TOGGLE);
+          window.location.href = '/dashboard';
         }).catch(err => {
         console.log(`Error during login: ${err}`);
         UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, "Oops, we're experiencing a network problem")
@@ -137,8 +143,8 @@ class SignupView extends React.Component {
       usernameError: '',
       passwordError: '',
       confirmPasswordError: '',
-    })
-    this.props.afterSubmit()
+    });
+    UIDispatcher.emit(UIEvents.SIGN_UP_DIALOG_TOGGLE);
   }
 
   render() {

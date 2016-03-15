@@ -72,10 +72,16 @@ export default class LeftNavBar extends React.Component {
         <CardActions style={styles.cardActions}>
           <FlatButton label="Log in"
             secondary={true}
-            onTouchTap={() => UIDispatcher.emit(UIEvents.LOGIN_DIALOG_TOGGLE)} />
+            onTouchTap={() => {
+              UIDispatcher.emit(UIEvents.LEFT_NAVBAR_TOGGLE);
+              UIDispatcher.emit(UIEvents.LOGIN_DIALOG_TOGGLE);
+            }} />
           <FlatButton label="Sign up"
             primary={true}
-            onTouchTap={() => UIDispatcher.emit(UIEvents.SIGN_UP_DIALOG_TOGGLE)} />
+            onTouchTap={() => {
+              UIDispatcher.emit(UIEvents.LEFT_NAVBAR_TOGGLE);
+              UIDispatcher.emit(UIEvents.SIGN_UP_DIALOG_TOGGLE);
+            }} />
         </CardActions>;
     }
     else {
@@ -94,6 +100,8 @@ export default class LeftNavBar extends React.Component {
               onTouchTap={() => {
                 UserStore.username = '';
                 UserStore.token = '';
+                UIDispatcher.emit(UIEvents.LEFT_NAVBAR_TOGGLE);
+                this.context.router.push('/dashboard');
               }}
               label="Log out" />
           </CardActions>

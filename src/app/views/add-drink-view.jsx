@@ -1,14 +1,19 @@
 import React from 'react';
+import DropDownMenu from 'material-ui/lib/DropDownMenu';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 import AutoComplete from 'material-ui/lib/auto-complete';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import api from '../api.jsx';
 
 const styles = {
   button: {
     margin: 12,
   },
 };
+
+const defaultCategory = "";
+const defaultGlass = "";
 
 export default class AddDrinkView extends React.Component {
 
@@ -47,7 +52,7 @@ export default class AddDrinkView extends React.Component {
 
   handleNewRequest(t) {
     if (t !== '') {
-      api.addDrink(this.state.drinkName, t);
+      api.addDrink(this.state.drinkName, t, defaultCategory, defaultGlass);
       this.setState({ingredientNames: ingredientNames.append(t)});
     }
   }

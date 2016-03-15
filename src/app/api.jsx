@@ -33,9 +33,14 @@ let API = {
         ingredienttyped:ingredientTyped
     })
   },
-  addDrink(drinkName, ingredientName) {
-
-  },
+  addDrink(drinkName, ingredientName, category, glass) {
+    return request('post', 'adddrink', {
+        drinkname: drinkName,
+        ingredientname: ingredientName,
+        catetory: category,
+        glass: glass
+    })
+},
   random() {
       return request('get', 'random');
   },

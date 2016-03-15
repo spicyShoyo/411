@@ -12,7 +12,7 @@ import AuthMixin from './mixins/auth-mixin'
 
 const styles = {
   container: {
-    backgroundColor: '#f7f7f7'
+    backgroundColor: '#f7f7f7',
   },
   div: {
     marginTop: 64,

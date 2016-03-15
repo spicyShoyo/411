@@ -31,10 +31,10 @@ export default class DrinkSearchView extends React.Component {
     };
 
     render() {
-        return (<AutoComplete hintText="sEarch dRink hEre!"
-                              filter={AutoComplete.caseInsensitiveFilter}
+        return (<AutoComplete filter={AutoComplete.caseInsensitiveFilter}
                               dataSource={this.state.dataSource}
                               onUpdateInput={this.handleUpdateInput}
+                              floatingLabelText="Search Drink"
                               style={this.props.style}/>);
     }
 }

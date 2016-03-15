@@ -101,7 +101,7 @@ export default class LeftNavBar extends React.Component {
                 UserStore.username = '';
                 UserStore.token = '';
                 UIDispatcher.emit(UIEvents.LEFT_NAVBAR_TOGGLE);
-                this.context.router.push('/dashboard');
+                window.location.href = '/';
               }}
               label="Log out" />
           </CardActions>

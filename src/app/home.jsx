@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import { browserHistory } from 'react-router';
 
 import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'
@@ -37,21 +38,24 @@ const styles = {
   }
 };
 
-class Home extends React.Component {
+export default React.createClass({
 
-  constructor(props, context) {
-    super(props, context);
-    this.centralButtonOnClick = this.centralButtonOnClick.bind(this);
-  }
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   componentWillMount() {
-    if (UserStore.username.length !== 0)
-      window.location.href = '/dashboard';
-  }
+    if (UserStore.username.length !== 0) {
+      this.render = () => {
+        return false;
+      };
+      browserHistory.push('/dashboard');
+    }
+  },
 
   centralButtonOnClick() {
     UIDispatcher.emit(UIEvents.LOGIN_DIALOG_TOGGLE);
-  }
+  },
 
   render() {
     return (
@@ -90,10 +94,4 @@ class Home extends React.Component {
       </div>
     )
   }
-}
-
-Home.contextTypes = {
-  router: React.PropTypes.object
-};
-
-export default Home;
+});

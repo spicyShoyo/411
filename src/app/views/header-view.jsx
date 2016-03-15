@@ -36,14 +36,6 @@ class HeaderView extends React.Component {
   }
 
   render() {
-    const standardActions = (
-      <FlatButton
-        label="Okey"
-        secondary={true}
-        onTouchTap={this.handleRequestClose}
-      />
-    );
-
     return <div style={styles.headerBackground} className='header-height'>
       <div style={styles.headerView}>
         <div style={styles.headerTextTitle}>Bacchanalia</div>

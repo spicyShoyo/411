@@ -31,7 +31,7 @@ export default class IntroTagView extends React.Component {
     if (this.currentInterval)
       window.clearInterval(this.currentInterval);
     this.currentInterval = window.setInterval(() => {
-      if (this.state.zDepth <= 1) {
+      if (this.state.zDepth <= 0) {
         window.clearInterval(this.currentInterval);
         return;
       }

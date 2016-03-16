@@ -33,22 +33,11 @@ class GridListView extends React.Component {
       detailsDialogOpen: false,
       details: tilesData[0]
     }
-
-    this.refreshDrinks = this.refreshDrinks.bind(this);
     this.updateDrinks=this.updateDrinks.bind(this);
   }
 
   componentWillMount() {
-    this.refreshDrinks();
-  }
-
-  componentDidMount() {
-    UIDispatcher.on(UIEvents.DRINK_DETAILS_TOGGLE,
-                    () => this.setState({detailsDialogOpen: !this.state.detailsDialogOpen}));
-  }
-
-  componentWillUnmount() {
-    UIDispatcher.removeAllListeners(UIEvents.DRINK_DETAILS_TOGGLE);
+    this.updateDrinks();
   }
 
   componentDidMount() {
@@ -61,21 +50,7 @@ class GridListView extends React.Component {
     UIDispatcher.removeAllListeners(UIEvents.DRINK_DETAILS_TOGGLE);
   }
 
-  updateDrinks(res) {
-    let resArr = res["drinks"];
-    console.log(res);
-    this.setState({ drinks: resArr });
-  }
-
-  componentDidMount() {
-    UIDispatcher.on(UIEvents.GRID_LIST_REFRESH, this.refreshDrinks);
-  }
-
-  componentWillUnmount() {
-    UIDispatcher.removeAllListeners(UIEvents.GRID_LIST_REFRESH);
-  }
-
-  async refreshDrinks() {
+  async updateDrinks() {
     let handleDrinkRequest = (res) => {
       let resArr = res["drinks"];
       this.setState({ drinks: resArr });

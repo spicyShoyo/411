@@ -39,17 +39,22 @@ let API = {
     return request('post', 'ingredientsearch', {ingredienttyped: ingredientTyped})
   },
   categoryTyped(categoryTyped) {
-    return request('post', 'categorysearch'), {categorysearch: categoryTyped}
+    return request('post', 'categorysearch', {categorysearch: categoryTyped})
   },
   glassTyped(glassTyped) {
-    return request('post', 'glasssearch'), {glasssearch: glassTyped}
+    return request('post', 'glasssearch', {glasssearch: glassTyped})
   },
-  addDrink(drinkName, ingredientName, category, glass) {
+  addDrink(drinkName, category, glass) {
     return request('post', 'adddrink', {
       drinkname: drinkName,
-      ingredientname: ingredientName,
       catetory: category,
       glass: glass
+    })
+  },
+  addIngredient(drinkName, ingredientName) {
+    return request('post', 'addingredient', {
+      drinkname: drinkName,
+      ingredientname: ingredientName
     })
   },
   likeADrink(userName, drinkName) {

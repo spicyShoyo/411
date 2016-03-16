@@ -8,14 +8,46 @@ import AutoComplete from 'material-ui/lib/auto-complete';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import api from '../api.jsx';
 
-const defaultCategory = "";
-const defaultGlass = "";
+const styles = {
+  container: {
+    width: '100%',
+    height: '50%',
+    position: 'relative',
+    width: '50%',
+    minWidth: 300,
+    maxWidth: 450,
+    minHeight: 400,
+    maxHeight: 1200,
+  },
+  backgroundMask: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: 200,
+    backgroundImage: 'url("/Poly15.jpg")',
+    backgroundSize: '100% auto',
+  },
+  view: {
+    background: 'transparent',
+    marginTop:-36,
+  },
+  titleView: {
+    minHeight: '200px',
+  },
+  textField: {
+    marginTop: -6,
+    marginBottom: -6,
+    width: '90%',
+  }
+}
 
 export default class AddDrinkView extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
       drinkName: "",
       category: "",
       glass: "",
@@ -33,6 +65,17 @@ export default class AddDrinkView extends React.Component {
       this.glassNewRequest = this.glassNewRequest.bind(this);
       this.ingredientUpdateInput = this.ingredientUpdateInput.bind(this);
       this.ingredientNewRequest = this.ingredientNewRequest.bind(this);
+      this.handleOpen = this.handleOpen.bind(this);
+      this.handleClose = this.handleClose.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleOpen() {
+    this.setState({open: true})
+  }
+
+  handleClose() {
+    this.setState({open: false})
   }
 
   handleEnterKeyDown(t) {
@@ -45,7 +88,7 @@ export default class AddDrinkView extends React.Component {
     if (t === '')
       return;
     api.categoryTyped(t).then(res => {
-      let resArr = res["categories"];
+      let resArr = res["drinks"];
       let newArr = [];
       for (let i = 0; i < resArr.length; ++i) {
         newArr.push(resArr[i]["category"]);
@@ -53,7 +96,7 @@ export default class AddDrinkView extends React.Component {
       }
       this.setState({categorySource: newArr});
     })
-  };
+  }
 
   categoryNewRequest(t) {
     if (t !== '')
@@ -65,7 +108,7 @@ export default class AddDrinkView extends React.Component {
     if (t === '')
       return;
     api.glassTyped(t).then(res => {
-      let resArr = res["glasses"];
+      let resArr = res["drinks"];
       let newArr = [];
       for (let i = 0; i < resArr.length; ++i) {
         newArr.push(resArr[i]["glass"]);
@@ -73,7 +116,7 @@ export default class AddDrinkView extends React.Component {
       }
       this.setState({glassSource: newArr});
     })
-  };
+  }
 
   glassNewRequest(t) {
     if (t !== '')
@@ -93,11 +136,11 @@ export default class AddDrinkView extends React.Component {
       }
       this.setState({ingredientSource: newArr});
     })
-  };
+  }
 
   ingredientNewRequest(t) {
     if (t !== '') {
-      api.addDrink(this.state.drinkName, t, this.state.category, this.state.glasss);
+      this.addIngredient(this.state.drinkName, t);
       this.setState({ingredientNames: this.state.ingredientNames.concat(t)});
       this.state.buttons.push(<div> <RaisedButton label={t}
                                             style={styles.button}>
@@ -106,37 +149,68 @@ export default class AddDrinkView extends React.Component {
       }
   }
 
+  handleSubmit() {
+    api.addDrink(this.state.drinkName, this.state.category, this.state.glasss);
+  }
+
   render() {
     return (
       <section>
-      <TextField hintText="Enter New Drink Name"
-                 onEnterKeyDown={this.handleEnterKeyDown}
-                 errorText={this.state.drinkNameError}
-      />
-      <br/>
-      <AutoComplete hintText="Search Category"
-                    filter={AutoComplete.caseInsensitiveFilter}
-                    dataSource={this.state.categorySource}
-                    onUpdateInput={this.categoryUpdateInput}
-                    onNewRequest={this.categoryNewRequest}
-      />
-      <br/>
-      <AutoComplete hintText="Search Glass"
-                    filter={AutoComplete.caseInsensitiveFilter}
-                    dataSource={this.state.glassSource}
-                    onUpdateInput={this.glassUpdateInput}
-                    onNewRequest={this.glassNewRequest}
-      />
-      <br/>
-      <AutoComplete hintText="Add Ingredient"
-                    filter={AutoComplete.caseInsensitiveFilter}
-                    dataSource={this.state.ingredientSource}
-                    onUpdateInput={this.ingredientUpdateInput}
-                    onNewRequest={this.ingredientNewRequest}
-      />
-      <br/>
-      {this.state.buttons
-      }
+      <RaisedButton label="Create Drink" onTouchTap={this.handleOpen} />
+        <Dialog
+          contentStyle={styles.container}
+          title="Create Drink"
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+          actions={[
+            <FlatButton
+              label="Cancel"
+              primary={false}
+              keyboardFocused={false}
+              onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+              label="Create New Drink"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleSubmit}
+            />
+          ]}
+        >
+          <section style={styles.backgroundMask}>
+          </section>
+          <section style={styles.view}>
+          <TextField hintText="Enter New Drink Name"
+                     onEnterKeyDown={this.handleEnterKeyDown}
+                     errorText={this.state.drinkNameError}
+          />
+          <br/>
+          <AutoComplete hintText="Search Category"
+                        filter={AutoComplete.caseInsensitiveFilter}
+                        dataSource={this.state.categorySource}
+                        onUpdateInput={this.categoryUpdateInput}
+                        onNewRequest={this.categoryNewRequest}
+          />
+          <br/>
+          <AutoComplete hintText="Search Glass"
+                        filter={AutoComplete.caseInsensitiveFilter}
+                        dataSource={this.state.glassSource}
+                        onUpdateInput={this.glassUpdateInput}
+                        onNewRequest={this.glassNewRequest}
+          />
+          <br/>
+          <AutoComplete hintText="Add Ingredient"
+                        filter={AutoComplete.caseInsensitiveFilter}
+                        dataSource={this.state.ingredientSource}
+                        onUpdateInput={this.ingredientUpdateInput}
+                        onNewRequest={this.ingredientNewRequest}
+          />
+          <br/>
+          {this.state.buttons
+          }
+          </section>
+        </Dialog>
       </section>
     );
   }

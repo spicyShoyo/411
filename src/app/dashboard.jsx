@@ -38,6 +38,7 @@ export default React.createClass({
           transparent={false} />
         <div style={styles.div}>
         <DropDownMenuView style={styles.searchBar}/>
+        <AddDrinkView/>
         <GridView/>
         </div>
       </div>

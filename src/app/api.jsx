@@ -28,10 +28,20 @@ let API = {
         drinktyped:drinkTyped
     })
   },
-  ingredientTyped(ingredientTyped) {
+  ingredientSearch(ingredientTyped) {
     return request('post', 'ingredienttyped', {
         ingredienttyped:ingredientTyped
     })
+  },
+  categoryTyped(categoryTyped) {
+    return request('post', 'categorysearch'), {
+      categorysearch:categoryTyped
+    }
+  },
+  glassTyped(glassTyped) {
+    return request('post', 'glasssearch'), {
+      glasssearch:glassTyped
+    }
   },
   addDrink(drinkName, ingredientName, category, glass) {
     return request('post', 'adddrink', {

@@ -6,6 +6,7 @@ import Toolbar from 'material-ui/lib/toolbar/toolbar'
 import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group'
 import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator'
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title'
+import api from '../api.jsx'
 
 export default class DropDownMenuView extends React.Component {
 
@@ -28,7 +29,7 @@ export default class DropDownMenuView extends React.Component {
   }
 
   handleUpdateInput(t) {
-    if (this.state.hintText === "Drink") {
+    if (this.state.hintText === "Search for Drink") {
       if (t === '') {
           this.setState({dataSource: []})
       }
@@ -42,7 +43,7 @@ export default class DropDownMenuView extends React.Component {
           this.setState({dataSource: newArr})
       })
     }
-    else if (this.state.hintText === "Ingredient") {
+    else if (this.state.hintText === "Search for Ingredient") {
       if (t === '') {
           this.setState({dataSource: []})
       }

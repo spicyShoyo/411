@@ -77,6 +77,11 @@ let API = {
       username: username,
     })
   },
+  getIngredient(drinkname) {
+    return request('post', 'getingredient', {
+      drinktyped:drinkname,
+    })
+  },
 }
 
 export default API

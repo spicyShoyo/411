@@ -31,7 +31,8 @@ class GridListView extends React.Component {
       drinks: tilesData,
       likedDrinks: [],
       detailsDialogOpen: false,
-      details: tilesData[0]
+      details: tilesData[0],
+      ingredients:[],
     }
     this.updateDrinks=this.updateDrinks.bind(this);
   }
@@ -72,6 +73,7 @@ class GridListView extends React.Component {
         <DrinkDetails
           open={this.state.detailsDialogOpen}
           details={this.state.details}
+          ingredients={this.state.ingredients}
         />
         <GridList
           cols={2}
@@ -112,10 +114,14 @@ class GridListView extends React.Component {
               rows={tile.featured ? 2 : 1}
             >
               <img src={tile.url} onClick={() => {
-                this.setState({
-                  detailsDialogOpen: true,
-                  details: tile
-                });
+                api.getIngredient(tile.drinkname).then(res=> {
+                  console.log(res);
+                  this.setState({
+                    ingredients:res,
+                    detailsDialogOpen: true,
+                    details: tile,
+                  });
+                })
               }} />
             </GridTile>
           ))}

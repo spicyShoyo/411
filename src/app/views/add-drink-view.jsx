@@ -207,9 +207,6 @@ export default class AddDrinkView extends React.Component {
           />
           <br/>
           {this.state.buttons}
-          <section> <RaisedButton label={"test button"}>
-                                  </RaisedButton>
-                                  </section>
           </section>
         </Dialog>
       </section>

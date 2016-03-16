@@ -13,7 +13,20 @@ const styles = {
     margin:'auto',
     display: 'block',
     width:'60%',
-  }
+  },
+
+  dropBar: {
+    width:'10%'
+  },
+
+  searchBar: {
+    display: 'block',
+    width:'96%'
+  },
+
+  sep: {
+    margin:'auto',
+  },
 }
 
 export default class DropDownMenuView extends React.Component {
@@ -72,18 +85,21 @@ export default class DropDownMenuView extends React.Component {
       <section style={styles.root}>
       <Toolbar>
       <ToolbarGroup float="right">
-      <DropDownMenu value={this.state.value} onChange={this.handleChange}>
+      <DropDownMenu style={styles.dropBar} value={this.state.value} onChange={this.handleChange}>
         <MenuItem value={1} primaryText="Drink"/>
         <MenuItem value={2} primaryText="Ingredient"/>
       </DropDownMenu>
       </ToolbarGroup>
-      <ToolbarGroup float="left">
-      <AutoComplete hintText={this.state.hintText}
+            <ToolbarSeparator style={styles.sep}/>
+      <ToolbarGroup float="left" >
+      <AutoComplete
+                    style={styles.searchBar}
+                    hintText={this.state.hintText}
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={this.state.dataSource}
                     onUpdateInput={this.handleUpdateInput}
       />
-      <ToolbarSeparator/>
+
       </ToolbarGroup>
       </Toolbar>
       </section>

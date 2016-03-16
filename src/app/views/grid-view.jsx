@@ -54,10 +54,12 @@ class GridListView extends React.Component {
 
   componentDidMount() {
     UIDispatcher.on(UIEvents.UPDATE_GRID, this.updateDrinks);
+    UIDispatcher.on(UIEvents.DRINK_DETAILS_TOGGLE, () => this.setState({ detailsDialogOpen: !this.state.detailsDialogOpen }));
   }
 
   componentWillUnmount() {
     UIDispatcher.removeAllListeners(UIEvents.UPDATE_GRID);
+    UIDispatcher.removeAllListeners(UIEvents.DRINK_DETAILS_TOGGLE);
   }
 
   updateDrinks(res) {

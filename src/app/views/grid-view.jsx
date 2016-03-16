@@ -43,15 +43,6 @@ class GridListView extends React.Component {
   }
 
   componentDidMount() {
-    UIDispatcher.on(UIEvents.DRINK_DETAILS_TOGGLE,
-                    () => this.setState({detailsDialogOpen: !this.state.detailsDialogOpen}));
-  }
-
-  componentWillUnmount() {
-    UIDispatcher.removeAllListeners(UIEvents.DRINK_DETAILS_TOGGLE);
-  }
-
-  componentDidMount() {
     UIDispatcher.on(UIEvents.UPDATE_GRID, this.updateDrinks);
     UIDispatcher.on(UIEvents.DRINK_DETAILS_TOGGLE, () => this.setState({ detailsDialogOpen: !this.state.detailsDialogOpen }));
   }
@@ -65,14 +56,6 @@ class GridListView extends React.Component {
     let resArr = res["drinks"];
     console.log(res);
     this.setState({ drinks: resArr });
-  }
-
-  componentDidMount() {
-    UIDispatcher.on(UIEvents.GRID_LIST_REFRESH, this.refreshDrinks);
-  }
-
-  componentWillUnmount() {
-    UIDispatcher.removeAllListeners(UIEvents.GRID_LIST_REFRESH);
   }
 
   refreshDrinks() {

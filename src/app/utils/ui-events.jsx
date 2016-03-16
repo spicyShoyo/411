@@ -7,5 +7,7 @@ export default {
   LOGIN_DIALOG_TOGGLE: 'event.main.login_dialog_open',
   SIGN_UP_DIALOG_TOGGLE: 'event.main.sign_up_dialog_toggle',
   SNACKBAR_TOGGLE: 'event.main.snackbar.toggle',
-  GRID_LIST_REFRESH: 'event.dashboard.grid_list.refresh'
+  GRID_LIST_REFRESH: 'event.dashboard.grid_list.refresh',
+  UPDATE_GRID: 'event.dashboard.update_grid',
+  DRINK_DETAILS_TOGGLE: 'event.dashboard.drink_detail_toggle'
 };

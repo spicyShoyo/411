@@ -1,7 +1,7 @@
 import React from 'react';
 import GridView from './views/grid-view'
 import DropDownMenuView from './views/drop-down-menu-view'
-
+import AddDrinkView from './views/add-drink-view'
 import DrinkSearchView from './views/drink-search-view'
 import NavBar from './views/navbar'
 
@@ -38,6 +38,7 @@ export default React.createClass({
           transparent={false} />
         <div style={styles.div}>
         <DropDownMenuView style={styles.searchBar}/>
+        <AddDrinkView/>
         <GridView/>
         </div>
       </div>

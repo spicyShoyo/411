@@ -2,6 +2,10 @@ import React from 'react'
 import DropDownMenu from 'material-ui/lib/DropDownMenu'
 import AutoComplete from 'material-ui/lib/auto-complete'
 import MenuItem from 'material-ui/lib/menus/menu-item'
+import Toolbar from 'material-ui/lib/toolbar/toolbar'
+import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group'
+import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator'
+import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title'
 
 export default class DropDownMenuView extends React.Component {
 
@@ -10,16 +14,16 @@ export default class DropDownMenuView extends React.Component {
     this.state = {
       hintText: "Search for Drink",
       dataSource: [],
-      value: 2};
+      value: 1};
       this.handleChange = this.handleChange.bind(this);
       this.handleUpdateInput = this.handleUpdateInput.bind(this);
   }
 
   handleChange(event, index, value) {
     this.setState({value})
-    if (value === 1)
+    if (value === 2)
       this.setState({hintText: "Search for Ingredient"})
-    else if (value === 2)
+    else if (value === 1)
       this.setState({hintText: "Search for Drink"})
   }
 
@@ -57,15 +61,22 @@ export default class DropDownMenuView extends React.Component {
   render() {
     return (
       <section>
+      <Toolbar>
+      <ToolbarGroup float="right">
       <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-        <MenuItem value={1} primaryText="Ingredient"/>
-        <MenuItem value={2} primaryText="Drink"/>
+        <MenuItem value={1} primaryText="Drink"/>
+        <MenuItem value={2} primaryText="Ingredient"/>
       </DropDownMenu>
+      </ToolbarGroup>
+      <ToolbarGroup float="left">
       <AutoComplete hintText={this.state.hintText}
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={this.state.dataSource}
                     onUpdateInput={this.handleUpdateInput}
       />
+      <ToolbarSeparator/>
+      </ToolbarGroup>
+      </Toolbar>
       </section>
     );
   }

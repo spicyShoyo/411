@@ -24,31 +24,32 @@ let API = {
     })
   },
   drinkTyped(drinkTyped) {
-    return request('post', 'drinktyped', {
-        drinktyped:drinkTyped
+    return request('post', 'drinktyped', {drinktyped: drinkTyped})
+  },
+
+  drinkSearch(param, searchBy) {
+    console.log(param);
+    return request('post', 'drinksearch', {
+      param: param,
+      searchby: searchBy
     })
   },
+
   ingredientTyped(ingredientTyped) {
-    return request('post', 'ingredientsearch', {
-        ingredienttyped:ingredientTyped
-    })
+    return request('post', 'ingredientsearch', {ingredienttyped: ingredientTyped})
   },
   categoryTyped(categoryTyped) {
-    return request('post', 'categorysearch'), {
-      categorysearch:categoryTyped
-    }
+    return request('post', 'categorysearch'), {categorysearch: categoryTyped}
   },
   glassTyped(glassTyped) {
-    return request('post', 'glasssearch'), {
-      glasssearch:glassTyped
-    }
+    return request('post', 'glasssearch'), {glasssearch: glassTyped}
   },
   addDrink(drinkName, ingredientName, category, glass) {
     return request('post', 'adddrink', {
-        drinkname: drinkName,
-        ingredientname: ingredientName,
-        catetory: category,
-        glass: glass
+      drinkname: drinkName,
+      ingredientname: ingredientName,
+      catetory: category,
+      glass: glass
     })
   },
   likeADrink(userName, drinkName) {
@@ -64,8 +65,8 @@ let API = {
     })
   },
   random() {
-      return request('get', 'random');
-  },
+    return request('get', 'random');
+  }
 }
 
 export default API

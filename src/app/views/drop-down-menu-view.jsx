@@ -7,6 +7,9 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group'
 import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator'
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title'
 import api from '../api.jsx'
+import UIDispatcher from '../utils/ui-dispatcher';
+import UIEvents from '../utils/ui-events';
+
 
 const styles = {
   root: {
@@ -39,6 +42,7 @@ export default class DropDownMenuView extends React.Component {
       value: 1};
       this.handleChange = this.handleChange.bind(this);
       this.handleUpdateInput = this.handleUpdateInput.bind(this);
+      this.handleNewRequest=this.handleNewRequest.bind(this);
   }
 
   handleChange(event, index, value) {
@@ -49,19 +53,20 @@ export default class DropDownMenuView extends React.Component {
       this.setState({hintText: "Search for Drink"})
   }
 
-  handleUpdateInput(t) {
+  handleNewRequest(t) {
     if (this.state.hintText === "Search for Drink") {
       if (t === '') {
           this.setState({dataSource: []})
       }
-      api.drinkTyped(t).then(res => {
-          let resArr = res["drinks"]
-          let newArr = []
-          for (let i = 0; i < resArr.length; ++i) {
-              newArr.push(resArr[i]["drinkname"])
-              console.log(resArr[i]["drinkname"])
-          }
-          this.setState({dataSource: newArr})
+      api.drinkSearch(t, 'drinkname').then(res => {
+        UIDispatcher.emit(UIEvents.UPDATE_GRID, res);
+          // let resArr = res["drinks"]
+          // let newArr = []
+          // for (let i = 0; i < resArr.length; ++i) {
+          //     newArr.push(resArr[i]["drinkname"])
+          //     console.log(resArr[i]["drinkname"])
+          // }
+          // this.setState({dataSource: newArr})
       })
     }
     else if (this.state.hintText === "Search for Ingredient") {
@@ -79,6 +84,40 @@ export default class DropDownMenuView extends React.Component {
       })
     }
   };
+
+
+  handleUpdateInput(t) {
+    if (this.state.hintText === "Search for Drink") {
+      if (t === '') {
+          this.setState({dataSource: []})
+      }
+      api.drinkTyped(t).then(res => {
+          let resArr = res["drinks"]
+          let newArr = []
+          for (let i = 0; i < resArr.length; ++i) {
+              newArr.push(resArr[i]["drinkname"])
+              console.log(resArr[i]["drinkname"])
+          }
+          this.setState({dataSource: newArr})
+      })
+    }
+    else if (this.state.hintText === "Search for Ingredient") {
+      //to be changed
+      if (t === '') {
+          this.setState({dataSource: []})
+      }
+      api.ingredientTyped(t).then(res => {
+          let resArr = res["ingredients"]
+          let newArr = [];
+          for (let i = 0; i < resArr.length; ++i) {
+              newArr.push(resArr[i]["ingredientname"])
+              console.log(resArr[i]["ingredientname"])
+          }
+          this.setState({dataSource: newArr})
+      })
+    }
+  };
+
 
   render() {
     return (
@@ -98,6 +137,7 @@ export default class DropDownMenuView extends React.Component {
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={this.state.dataSource}
                     onUpdateInput={this.handleUpdateInput}
+                    onNewRequest={this.handleNewRequest}
       />
 
       </ToolbarGroup>

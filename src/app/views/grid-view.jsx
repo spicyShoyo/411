@@ -32,10 +32,25 @@ class GridListView extends React.Component {
       likedDrinks: []
     }
     this.refreshDrinks = this.refreshDrinks.bind(this);
+    this.updateDrinks=this.updateDrinks.bind(this);
   }
 
   componentWillMount() {
       this.refreshDrinks();
+  }
+
+  componentDidMount() {
+    UIDispatcher.on(UIEvents.UPDATE_GRID, this.updateDrinks);
+  }
+
+  componentWillUnmount() {
+    UIDispatcher.removeAllListeners(UIEvents.UPDATE_GRID);
+  }
+
+  updateDrinks(res) {
+    let resArr = res["drinks"];
+    console.log(res);
+    this.setState({ drinks: resArr });
   }
 
   refreshDrinks() {

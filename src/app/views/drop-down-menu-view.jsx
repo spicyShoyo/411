@@ -8,6 +8,14 @@ import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator'
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title'
 import api from '../api.jsx'
 
+const styles = {
+  root: {
+    margin:'auto',
+    display: 'block',
+    width:'60%',
+  }
+}
+
 export default class DropDownMenuView extends React.Component {
 
   constructor(props) {
@@ -61,7 +69,7 @@ export default class DropDownMenuView extends React.Component {
 
   render() {
     return (
-      <section>
+      <section style={styles.root}>
       <Toolbar>
       <ToolbarGroup float="right">
       <DropDownMenu value={this.state.value} onChange={this.handleChange}>

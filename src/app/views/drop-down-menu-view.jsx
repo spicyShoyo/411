@@ -62,13 +62,13 @@ export default class DropDownMenuView extends React.Component {
     return (
       <section>
       <Toolbar>
-      <ToolbarGroup float="left">
+      <ToolbarGroup float="right">
       <DropDownMenu value={this.state.value} onChange={this.handleChange}>
         <MenuItem value={1} primaryText="Drink"/>
         <MenuItem value={2} primaryText="Ingredient"/>
       </DropDownMenu>
       </ToolbarGroup>
-      <ToolbarGroup float="right">
+      <ToolbarGroup float="left">
       <AutoComplete hintText={this.state.hintText}
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={this.state.dataSource}

@@ -13,10 +13,6 @@ const styles = {
     margin:'auto',
     display: 'block',
     width:'60%',
-  },
-
-  searchBar: {
-    width:'80%',
   }
 }
 
@@ -86,7 +82,6 @@ export default class DropDownMenuView extends React.Component {
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={this.state.dataSource}
                     onUpdateInput={this.handleUpdateInput}
-                    style={styles.searchBar}
       />
       <ToolbarSeparator/>
       </ToolbarGroup>

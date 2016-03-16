@@ -2,6 +2,10 @@ import React from 'react'
 import DropDownMenu from 'material-ui/lib/DropDownMenu'
 import AutoComplete from 'material-ui/lib/auto-complete'
 import MenuItem from 'material-ui/lib/menus/menu-item'
+import Toolbar from 'material-ui/lib/toolbar/toolbar'
+import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group'
+import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator'
+import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title'
 
 export default class DropDownMenuView extends React.Component {
 
@@ -57,16 +61,22 @@ export default class DropDownMenuView extends React.Component {
   render() {
     return (
       <section>
+      <Toolbar>
+      <ToolbarGroup float="left">
       <DropDownMenu value={this.state.value} onChange={this.handleChange}>
         <MenuItem value={1} primaryText="Drink"/>
         <MenuItem value={2} primaryText="Ingredient"/>
       </DropDownMenu>
+      </ToolbarGroup>
+      <ToolbarGroup float="right">
       <AutoComplete hintText={this.state.hintText}
                     filter={AutoComplete.caseInsensitiveFilter}
                     dataSource={this.state.dataSource}
                     onUpdateInput={this.handleUpdateInput}
-                    style={this.props.style}
       />
+      <ToolbarSeparator/>
+      </ToolbarGroup>
+      </Toolbar>
       </section>
     );
   }

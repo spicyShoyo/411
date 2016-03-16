@@ -35,11 +35,6 @@ const styles = {
   titleView: {
     minHeight: '200px',
   },
-  textField: {
-    marginTop: -6,
-    marginBottom: -6,
-    width: '90%',
-  }
 }
 
 export default class AddDrinkView extends React.Component {
@@ -140,12 +135,16 @@ export default class AddDrinkView extends React.Component {
 
   ingredientNewRequest(t) {
     if (t !== '') {
-      this.addIngredient(this.state.drinkName, t);
+      api.addIngredient(this.state.drinkName, t);
       this.setState({ingredientNames: this.state.ingredientNames.concat(t)});
-      this.state.buttons.push(<div> <RaisedButton label={t}
-                                            style={styles.button}>
-                              </RaisedButton>
-                              </div>);
+      console.log(this.state.ingredientNames);
+      let newButton =
+        <section>
+          <RaisedButton label={t}>
+          </RaisedButton>
+        </section>;
+      this.state.buttons.push(newButton);
+      this.setState({buttons: this.state.buttons});
       }
   }
 
@@ -175,7 +174,7 @@ export default class AddDrinkView extends React.Component {
               primary={true}
               keyboardFocused={true}
               onTouchTap={this.handleSubmit}
-            />
+            />,
           ]}
         >
           <section style={styles.backgroundMask}>
@@ -207,8 +206,10 @@ export default class AddDrinkView extends React.Component {
                         onNewRequest={this.ingredientNewRequest}
           />
           <br/>
-          {this.state.buttons
-          }
+          {this.state.buttons}
+          <section> <RaisedButton label={"test button"}>
+                                  </RaisedButton>
+                                  </section>
           </section>
         </Dialog>
       </section>

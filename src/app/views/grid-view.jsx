@@ -75,21 +75,19 @@ class GridListView extends React.Component {
     UIDispatcher.removeAllListeners(UIEvents.GRID_LIST_REFRESH);
   }
 
-  refreshDrinks() {
+  async refreshDrinks() {
     let handleDrinkRequest = (res) => {
       let resArr = res["drinks"];
-      if (this.props.favoritePage === true)
-        resArr = resArr.map(d => {
-          let drink = d
-          drink.featured=false
-          return drink
-        })
       this.setState({ drinks: resArr });
     }
     if (this.props.favoritePage === true) {
-      api.getLikedDrink(UserStore.username).then(handleDrinkRequest)
+      let res = await api.getLikedDrink(UserStore.username);
+      handleDrinkRequest(res);
+      res.drinks.forEach(drink => drink.featured = false);
+      this.setState({ drinks: res.drinks });
     } else {
-      api.randomDrinks().then(handleDrinkRequest)
+      let res = await api.randomDrinks();
+      handleDrinkRequest(res);
     }
   }
 

@@ -3,6 +3,7 @@ import GridList from 'material-ui/lib/grid-list/grid-list';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
 import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
 import IconButton from 'material-ui/lib/icon-button';
+import DrinkDetails from './drink-details';
 import api from '../api.jsx';
 import UserStore from '../stores/user-store'
 import UIDispatcher from '../utils/ui-dispatcher'
@@ -29,14 +30,26 @@ class GridListView extends React.Component {
     UIDispatcher.on(UIEvents.GRID_LIST_REFRESH, this.refreshDrinks);
     this.state = {
       drinks: tilesData,
-      likedDrinks: []
+      likedDrinks: [],
+      detailsDialogOpen: false,
+      details: tilesData[0]
     }
+
     this.refreshDrinks = this.refreshDrinks.bind(this);
     this.updateDrinks=this.updateDrinks.bind(this);
   }
 
   componentWillMount() {
-      this.refreshDrinks();
+    this.refreshDrinks();
+  }
+
+  componentDidMount() {
+    UIDispatcher.on(UIEvents.DRINK_DETAILS_TOGGLE,
+                    () => this.setState({detailsDialogOpen: !this.state.detailsDialogOpen}));
+  }
+
+  componentWillUnmount() {
+    UIDispatcher.removeAllListeners(UIEvents.DRINK_DETAILS_TOGGLE);
   }
 
   componentDidMount() {
@@ -54,15 +67,35 @@ class GridListView extends React.Component {
   }
 
   refreshDrinks() {
-      api.random().then(res => {
-          let resArr = res["drinks"];
-          this.setState({ drinks: resArr });
-      })
+    api.random().then(res => {
+        let resArr = res["drinks"];
+        this.setState({ drinks: resArr });
+    })
   }
 
   render() {
+    const actionOnClickListener = () => {
+      if (this.state.likedDrinks.filter(n => n === tile.drinkname).length === 0) {
+        this.setState({likedDrinks: this.state.likedDrinks.concat([tile.drinkname])})
+        api.likeADrink(UserStore.username, tile.drinkname)
+          .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
+          .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
+      } else {
+        this.setState({likedDrinks: this.state.likedDrinks.reduce((a, c) => {
+          if (c === tile.drinkname) return a
+          else return a.concat([c])
+        }, [])})
+        api.unlikeADrink(UserStore.username, tile.drinkname)
+          .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
+          .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
+      }
+    };
     return (
       <div style={styles.root}>
+        <DrinkDetails
+          open={this.state.detailsDialogOpen}
+          details={this.state.details}
+        />
         <GridList
           cols={2}
           cellHeight={225}
@@ -76,22 +109,7 @@ class GridListView extends React.Component {
               subtitle={tile.category}
               actionIcon={
                 <IconButton
-                  onClick={() => {
-                    if (this.state.likedDrinks.filter(n => n === tile.drinkname).length === 0) {
-                      this.setState({likedDrinks: this.state.likedDrinks.concat([tile.drinkname])})
-                      api.likeADrink(UserStore.username, tile.drinkname)
-                        .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
-                        .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
-                    } else {
-                      this.setState({likedDrinks: this.state.likedDrinks.reduce((a, c) => {
-                        if (c === tile.drinkname) return a
-                        else return a.concat([c])
-                      }, [])})
-                      api.unlikeADrink(UserStore.username, tile.drinkname)
-                        .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
-                        .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
-                    }
-                  }}>
+                  onClick={actionOnClickListener}>
                   <StarBorder color="white"/>
                 </IconButton>
               }
@@ -101,7 +119,12 @@ class GridListView extends React.Component {
               cols={tile.featured ? 2 : 1}
               rows={tile.featured ? 2 : 1}
             >
-              <img src={tile.url} />
+              <img src={tile.url} onClick={() => {
+                this.setState({
+                  detailsDialogOpen: true,
+                  details: tile
+                });
+              }} />
             </GridTile>
           ))}
         </GridList>

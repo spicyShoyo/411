@@ -78,6 +78,12 @@ class GridListView extends React.Component {
   refreshDrinks() {
     let handleDrinkRequest = (res) => {
       let resArr = res["drinks"];
+      if (this.props.favoritePage === true)
+        resArr = resArr.map(d => {
+          let drink = d
+          drink.featured=false
+          return drink
+        })
       this.setState({ drinks: resArr });
     }
     if (this.props.favoritePage === true) {
@@ -88,22 +94,6 @@ class GridListView extends React.Component {
   }
 
   render() {
-    const actionOnClickListener = () => {
-      if (this.state.likedDrinks.filter(n => n === tile.drinkname).length === 0) {
-        this.setState({likedDrinks: this.state.likedDrinks.concat([tile.drinkname])})
-        api.likeADrink(UserStore.username, tile.drinkname)
-          .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
-          .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
-      } else {
-        this.setState({likedDrinks: this.state.likedDrinks.reduce((a, c) => {
-          if (c === tile.drinkname) return a
-          else return a.concat([c])
-        }, [])})
-        api.unlikeADrink(UserStore.username, tile.drinkname)
-          .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
-          .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
-      }
-    };
     return (
       <div style={styles.root}>
         <DrinkDetails
@@ -123,7 +113,22 @@ class GridListView extends React.Component {
               subtitle={tile.category}
               actionIcon={
                 <IconButton
-                  onClick={actionOnClickListener}>
+                  onClick={() => {
+                    if (this.state.likedDrinks.filter(n => n === tile.drinkname).length === 0) {
+                      this.setState({likedDrinks: this.state.likedDrinks.concat([tile.drinkname])})
+                      api.likeADrink(UserStore.username, tile.drinkname)
+                        .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
+                        .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
+                    } else {
+                      this.setState({likedDrinks: this.state.likedDrinks.reduce((a, c) => {
+                        if (c === tile.drinkname) return a
+                        else return a.concat([c])
+                      }, [])})
+                      api.unlikeADrink(UserStore.username, tile.drinkname)
+                        .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
+                        .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
+                    }
+                  }}>
                   <StarBorder color="white"/>
                 </IconButton>
               }

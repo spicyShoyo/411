@@ -53,8 +53,11 @@ let API = {
       drinkname: drinkName
     })
   },
-  random() {
-      return request('get', 'random');
+  randomDrinks() {
+    return request('get', 'random');
+  },
+  getLikedDrink(username) {
+    return request('get', 'random')
   },
 }
 

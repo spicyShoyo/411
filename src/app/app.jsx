@@ -5,6 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './main'; // Our custom react component
 import Home from './home';
 import Dashboard from './dashboard';
+import FavoritePage from './favorite-page'
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -24,6 +25,7 @@ class App extends React.Component {
         <Route path="/" component={Main}>
           <IndexRoute component={Home} />
           <Route path="dashboard" component={Dashboard} />
+          <Route path="favorites" component={FavoritePage} />
         </Route>
       </Router>
     );

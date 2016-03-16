@@ -26,7 +26,6 @@ const styles = {
 class GridListView extends React.Component {
   constructor(props, context) {
     super(props, context)
-    UIDispatcher.on(UIEvents.GRID_LIST_REFRESH, this.refreshDrinks);
     this.state = {
       drinks: tilesData,
       likedDrinks: []
@@ -38,11 +37,24 @@ class GridListView extends React.Component {
       this.refreshDrinks();
   }
 
+  componentDidMount() {
+    UIDispatcher.on(UIEvents.GRID_LIST_REFRESH, this.refreshDrinks);
+  }
+
+  componentWillUnmount() {
+    UIDispatcher.removeAllListeners(UIEvents.GRID_LIST_REFRESH);
+  }
+
   refreshDrinks() {
-      api.random().then(res => {
-          let resArr = res["drinks"];
-          this.setState({ drinks: resArr });
-      })
+    let handleDrinkRequest = (res) => {
+      let resArr = res["drinks"];
+      this.setState({ drinks: resArr });
+    }
+    if (this.props.favoritePage === true) {
+      api.getLikedDrink(UserStore.username).then(handleDrinkRequest)
+    } else {
+      api.randomDrinks().then(handleDrinkRequest)
+    }
   }
 
   render() {

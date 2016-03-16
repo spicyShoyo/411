@@ -40,7 +40,7 @@ export default class LeftNavBar extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.openLeftNavBar = this.openLeftNavBar.bind(this);
   }
-  
+
   static get contextTypes() {
     return {
       router: React.PropTypes.object
@@ -128,14 +128,14 @@ export default class LeftNavBar extends React.Component {
         <List>
           <NavLink to="/">
             <ListItem
-              leftIcon={<FontIcon className="material-icons">home</FontIcon>}
-              primaryText="Home">
+              leftIcon={<FontIcon className="material-icons">dashboard</FontIcon>}
+              primaryText="Dashboard">
             </ListItem>
           </NavLink>
-          <NavLink to="/a">
+          <NavLink to="/favorites">
             <ListItem
-              leftIcon={<FontIcon className="material-icons">search</FontIcon>}
-              primaryText="Search" />
+              leftIcon={<FontIcon className="material-icons">favorite</FontIcon>}
+              primaryText="Favorites" />
           </NavLink>
         </List>
       </LeftNav>

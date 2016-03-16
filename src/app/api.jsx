@@ -73,7 +73,9 @@ let API = {
     return request('get', 'random');
   },
   getLikedDrink(username) {
-    return request('get', 'random')
+    return request('post', 'likedrink', {
+      username: username,
+    })
   },
 }
 

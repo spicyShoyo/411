@@ -28,8 +28,8 @@ let API = {
         drinktyped:drinkTyped
     })
   },
-  ingredientSearch(ingredientTyped) {
-    return request('post', 'ingredienttyped', {
+  ingredientTyped(ingredientTyped) {
+    return request('post', 'ingredientsearch', {
         ingredienttyped:ingredientTyped
     })
   },

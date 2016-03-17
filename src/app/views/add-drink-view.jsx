@@ -149,7 +149,9 @@ export default class AddDrinkView extends React.Component {
   }
 
   handleSubmit() {
-    api.addDrink(this.state.drinkName, this.state.category, this.state.glasss);
+    api.addDrink(this.state.drinkName, this.state.category, this.state.glasss).then(res => {
+      alert(res["drinks"])
+    });
   }
 
   render() {

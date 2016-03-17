@@ -38,3 +38,6 @@ node_modules
 # Ignore IntelliJ files
 .idea
 *.iml
+
+# Ignore build
+build

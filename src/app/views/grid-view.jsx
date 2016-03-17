@@ -35,6 +35,7 @@ class GridListView extends React.Component {
       ingredients:[],
     }
     this.updateDrinks=this.updateDrinks.bind(this);
+    this.updateDrinkTiles = this.updateDrinkTiles.bind(this);
   }
 
   componentWillMount() {
@@ -42,7 +43,7 @@ class GridListView extends React.Component {
   }
 
   componentDidMount() {
-    UIDispatcher.on(UIEvents.UPDATE_GRID, this.updateDrinks);
+    UIDispatcher.on(UIEvents.UPDATE_GRID, this.updateDrinkTiles);
     UIDispatcher.on(UIEvents.DRINK_DETAILS_TOGGLE, () => this.setState({ detailsDialogOpen: !this.state.detailsDialogOpen }));
   }
 
@@ -51,19 +52,20 @@ class GridListView extends React.Component {
     UIDispatcher.removeAllListeners(UIEvents.DRINK_DETAILS_TOGGLE);
   }
 
+  updateDrinkTiles(res) {
+    let resArr = res["drinks"];
+    this.setState({ drinks: resArr });
+  }
+
   async updateDrinks() {
-    let handleDrinkRequest = (res) => {
-      let resArr = res["drinks"];
-      this.setState({ drinks: resArr });
-    }
     if (this.props.favoritePage === true) {
       let res = await api.getLikedDrink(UserStore.username);
-      handleDrinkRequest(res);
+      this.updateDrinkTiles(res);
       res.drinks.forEach(drink => drink.featured = false);
       this.setState({ drinks: res.drinks });
     } else {
       let res = await api.randomDrinks();
-      handleDrinkRequest(res);
+      this.updateDrinkTiles(res);
     }
   }
 

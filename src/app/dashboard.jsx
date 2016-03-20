@@ -4,6 +4,7 @@ import DropDownMenuView from './views/drop-down-menu-view'
 import AddDrinkView from './views/add-drink-view'
 import DrinkSearchView from './views/drink-search-view'
 import NavBar from './views/navbar'
+import Dd from './views/d3-view'
 
 import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'
@@ -33,13 +34,14 @@ export default React.createClass({
   render() {
     return (
       <div style={styles.container}>
-        <NavBar
+        {/*<NavBar
           title="Bacchanalia"
-          transparent={false} />
+          transparent={false} />*/}
         <div style={styles.div}>
-        <DropDownMenuView style={styles.searchBar}/>
+          <Dd />
+        {/*<DropDownMenuView style={styles.searchBar}/>
         <AddDrinkView/>
-        <GridView/>
+        <GridView/>*/}
         </div>
       </div>
     );

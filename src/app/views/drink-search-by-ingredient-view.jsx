@@ -25,7 +25,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: 200,
-    // backgroundImage: 'url("/Poly15.jpg")',
+    //backgroundImage: 'url("/Poly15.jpg")',
     backgroundSize: '100% auto',
   },
   view: {
@@ -43,21 +43,11 @@ export default class AddDrinkView extends React.Component {
     super(props);
     this.state = {
       open: false,
-      drinkName: "",
-      category: "",
-      glass: "",
       hintText: "Search for Ingredient",
-      drinkNameError: "",
       ingredientNames: [],
-      categorySource: [],
-      glassSource: [],
       ingredientSource: [],
       buttons: []};
       this.handleEnterKeyDown = this.handleEnterKeyDown.bind(this);
-      this.categoryUpdateInput = this.categoryUpdateInput.bind(this);
-      this.categoryNewRequest = this.categoryNewRequest.bind(this);
-      this.glassUpdateInput = this.glassUpdateInput.bind(this);
-      this.glassNewRequest = this.glassNewRequest.bind(this);
       this.ingredientUpdateInput = this.ingredientUpdateInput.bind(this);
       this.ingredientNewRequest = this.ingredientNewRequest.bind(this);
       this.handleOpen = this.handleOpen.bind(this);
@@ -74,48 +64,8 @@ export default class AddDrinkView extends React.Component {
   }
 
   handleEnterKeyDown(t) {
-    if (t === '')
-      this.setState({drinkName: "Drink name cannot be empty!"})
-  }
-
-  categoryUpdateInput(t) {
-    this.setState({categorySource: []});
-    if (t === '')
-      return;
-    api.categoryTyped(t).then(res => {
-      let resArr = res["drinks"];
-      let newArr = [];
-      for (let i = 0; i < resArr.length; ++i) {
-        newArr.push(resArr[i]["category"]);
-        console.log(resArr[i]["category"]);
-      }
-      this.setState({categorySource: newArr});
-    })
-  }
-
-  categoryNewRequest(t) {
-    if (t !== '')
-      this.setState({category: t});
-  }
-
-  glassUpdateInput(t) {
-    this.setState({glassSource: []});
-    if (t === '')
-      return;
-    api.glassTyped(t).then(res => {
-      let resArr = res["drinks"];
-      let newArr = [];
-      for (let i = 0; i < resArr.length; ++i) {
-        newArr.push(resArr[i]["glass"]);
-        console.log(resArr[i]["glass"]);
-      }
-      this.setState({glassSource: newArr});
-    })
-  }
-
-  glassNewRequest(t) {
-    if (t !== '')
-      this.setState({glass: t});
+    // if (t === '')
+    //   this.setState({drinkName: "Drink name cannot be empty!"})
   }
 
   ingredientUpdateInput(t) {
@@ -127,7 +77,7 @@ export default class AddDrinkView extends React.Component {
       let newArr = [];
       for (let i = 0; i < resArr.length; ++i) {
         newArr.push(resArr[i]["ingredientname"]);
-        console.log(resArr[i]["ingredientname"]);
+        //console.log(resArr[i]["ingredientname"]);
       }
       this.setState({ingredientSource: newArr});
     })
@@ -137,7 +87,7 @@ export default class AddDrinkView extends React.Component {
     if (t !== '') {
       api.addIngredient(this.state.drinkName, t);
       this.setState({ingredientNames: this.state.ingredientNames.concat(t)});
-      console.log(this.state.ingredientNames);
+      //console.log(this.state.ingredientNames);
       let newButton =
         <section>
           <RaisedButton label={t} onClick={()=> {
@@ -145,6 +95,7 @@ export default class AddDrinkView extends React.Component {
                 if(this.state.buttons[i].props.children.props.label===t) {
                   this.state.buttons.splice(i, 1);
                   this.setState({buttons: this.state.buttons});
+                  break;
                 }
               }
             }}>
@@ -156,18 +107,22 @@ export default class AddDrinkView extends React.Component {
   }
 
   handleSubmit() {
-    api.addDrink(this.state.drinkName, this.state.category, this.state.glasss).then(res => {
-      alert(res["drinks"])
+    // api.addDrink(this.state.drinkName, this.state.category, this.state.glasss).then(res => {
+    //   alert(res["drinks"])
+    // });
+    //console.log(this.state.ingredientNames);
+    api.searchDrinkByIngredient(this.state.ingredientNames).then(res=> {
+      alert(res);
     });
   }
 
   render() {
     return (
       <section>
-      <RaisedButton label="Create Drink" onTouchTap={this.handleOpen} />
+      <RaisedButton label="Search Drink" onTouchTap={this.handleOpen} />
         <Dialog
           contentStyle={styles.container}
-          title="Create Drink"
+          title="Search Drink"
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
@@ -179,7 +134,7 @@ export default class AddDrinkView extends React.Component {
               onTouchTap={this.handleClose}
             />,
             <FlatButton
-              label="Create New Drink"
+              label="Search Drinks"
               primary={true}
               keyboardFocused={true}
               onTouchTap={this.handleSubmit}
@@ -189,24 +144,6 @@ export default class AddDrinkView extends React.Component {
           <section style={styles.backgroundMask}>
           </section>
           <section style={styles.view}>
-          <TextField hintText="Enter New Drink Name"
-                     onEnterKeyDown={this.handleEnterKeyDown}
-                     errorText={this.state.drinkNameError}
-          />
-          <br/>
-          <AutoComplete hintText="Search Category"
-                        filter={AutoComplete.caseInsensitiveFilter}
-                        dataSource={this.state.categorySource}
-                        onUpdateInput={this.categoryUpdateInput}
-                        onNewRequest={this.categoryNewRequest}
-          />
-          <br/>
-          <AutoComplete hintText="Search Glass"
-                        filter={AutoComplete.caseInsensitiveFilter}
-                        dataSource={this.state.glassSource}
-                        onUpdateInput={this.glassUpdateInput}
-                        onNewRequest={this.glassNewRequest}
-          />
           <br/>
           <AutoComplete hintText="Add Ingredient"
                         filter={AutoComplete.caseInsensitiveFilter}

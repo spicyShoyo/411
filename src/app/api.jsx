@@ -82,6 +82,12 @@ let API = {
       drinktyped:drinkname,
     })
   },
+
+  searchDrinkByIngredient(ingredientNames) {
+    return request('post', 'searchdrinkbyingredient', {
+      ingredientnames: ingredientNames,
+    })
+  },
 }
 
 export default API

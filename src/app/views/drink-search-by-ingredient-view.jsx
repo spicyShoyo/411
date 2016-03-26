@@ -111,9 +111,10 @@ export default class AddDrinkView extends React.Component {
     //   alert(res["drinks"])
     // });
     //console.log(this.state.ingredientNames);
-    api.searchDrinkByIngredient(this.state.ingredientNames).then(res=> {
-      alert(res);
-    });
+    window.location.href = '/virtualized';
+    // api.searchDrinkByIngredient(this.state.ingredientNames).then(res=> {
+    //   alert(res);
+    // });
   }
 
   render() {

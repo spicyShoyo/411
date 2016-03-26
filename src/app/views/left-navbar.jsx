@@ -137,6 +137,11 @@ export default class LeftNavBar extends React.Component {
               leftIcon={<FontIcon className="material-icons">favorite</FontIcon>}
               primaryText="Favorites" />
           </NavLink>
+          <NavLink to="/virtualized">
+            <ListItem
+              leftIcon={<FontIcon className="material-icons">album</FontIcon>}
+              primaryText="Virtualized" />
+          </NavLink>
         </List>
       </LeftNav>
     );

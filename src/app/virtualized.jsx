@@ -5,6 +5,7 @@ import AddDrinkView from './views/add-drink-view'
 import DrinkSearchByIngredientView from './views/drink-search-by-ingredient-view'
 import DrinkSearchView from './views/drink-search-view'
 import NavBar from './views/navbar'
+import Dd from './views/d3-view'
 
 import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'
@@ -27,7 +28,6 @@ const styles = {
   }
 };
 
-
 export default React.createClass({
 
   mixins: [AuthMixin],
@@ -39,10 +39,11 @@ export default React.createClass({
           title="Bacchanalia"
           transparent={false} />
         <div style={styles.div}>
-        <DropDownMenuView style={styles.searchBar}/>
+        <Dd />
+        {/*<DropDownMenuView style={styles.searchBar}/>
         <AddDrinkView/>
         <DrinkSearchByIngredientView/>
-        <GridView/>
+        <GridView/>*/}
         </div>
       </div>
     );

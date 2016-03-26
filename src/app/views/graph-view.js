@@ -7,7 +7,7 @@ export default React.createClass({
     return {
         graph: {},
         identifier:uuid.v4(),
-        style:{width:"640px",height:"480px"}
+        // style:{width:"960px",height:"480px"}
     };
   },
 
@@ -28,9 +28,15 @@ export default React.createClass({
     let container = document.getElementById(this.props.identifier);
 
     // Options
-    let options = {};
+    let options = {interaction:{hover:true}};
 
     let network = new vis.Network(container, this.props.graph, options);
+    network.on("click", function (params) {
+      // console.log(params);
+    });
+    network.on("showPopup", function (params) {
+        // container.innerHTML = '<h2>showPopup event: </h2>' + JSON.stringify(params, null, 4);
+    });
   },
 
 });

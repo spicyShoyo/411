@@ -33,7 +33,10 @@ export default React.createClass({
   mixins: [AuthMixin],
 
   render() {
+    let a=this.props.location;
+    console.log(a);
     return (
+      <section>
       <div style={styles.container}>
         <NavBar
           title="Bacchanalia"
@@ -45,7 +48,10 @@ export default React.createClass({
         <DrinkSearchByIngredientView/>
         <GridView/>*/}
         </div>
+
       </div>
+      <GridView/>
+      </section>
     );
   }
 });

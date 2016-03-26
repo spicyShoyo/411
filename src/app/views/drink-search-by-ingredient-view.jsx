@@ -7,6 +7,7 @@ import TextField from 'material-ui/lib/text-field';
 import AutoComplete from 'material-ui/lib/auto-complete';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import api from '../api.jsx';
+import { browserHistory } from 'react-router';
 
 const styles = {
   container: {
@@ -107,14 +108,9 @@ export default class AddDrinkView extends React.Component {
   }
 
   handleSubmit() {
-    // api.addDrink(this.state.drinkName, this.state.category, this.state.glasss).then(res => {
-    //   alert(res["drinks"])
-    // });
-    //console.log(this.state.ingredientNames);
-    window.location.href = '/virtualized';
-    // api.searchDrinkByIngredient(this.state.ingredientNames).then(res=> {
-    //   alert(res);
-    // });
+    api.searchDrinkByIngredient(this.state.ingredientNames).then(res=> {
+      browserHistory.push(`/virtualized?drinks=${JSON.stringify(res)}`);
+    });
   }
 
   render() {

@@ -35,7 +35,7 @@ class dd extends React.Component{
     document.getElementById(this.props.identifier)
     return (
       <div>
-      <Graph graph={data} style={styles.graph} />
+      <Graph graph={this.props.data} style={styles.graph} />
       </div>
     );
   }

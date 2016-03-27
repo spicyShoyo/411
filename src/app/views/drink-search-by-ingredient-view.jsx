@@ -109,6 +109,7 @@ export default class AddDrinkView extends React.Component {
 
   handleSubmit() {
     api.searchDrinkByIngredient(this.state.ingredientNames).then(res=> {
+      console.log(res);
       browserHistory.push(`/virtualized?drinks=${JSON.stringify(res)}`);
     });
   }

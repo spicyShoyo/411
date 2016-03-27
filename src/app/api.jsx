@@ -1,4 +1,6 @@
-const serverURL = "http://bac-backend.herokuapp.com/v1/"
+// const serverURL = "http://bac-backend.herokuapp.com/v1/"
+
+const serverURL = "http://localhost:51119/v1/"
 
 let request = (method, key, body) => {
   return fetch(serverURL + key, {

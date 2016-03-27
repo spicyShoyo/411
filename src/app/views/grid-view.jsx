@@ -9,6 +9,8 @@ import UserStore from '../stores/user-store'
 import UIDispatcher from '../utils/ui-dispatcher'
 import UIEvents from '../utils/ui-events'
 
+import _ from 'lodash';
+
 const styles = {
   root: {
     display: 'flex',
@@ -116,12 +118,11 @@ class GridListView extends React.Component {
               rows={tile.featured ? 2 : 1}
             >
               <img src={tile.url} onClick={() => {
-                api.getIngredient(tile.drinkname).then(res=> {
-                  console.log(res);
+                api.getIngredient(tile.drinkname).then(res => {
                   this.setState({
-                    ingredients:res,
                     detailsDialogOpen: true,
                     details: tile,
+                    ingredients: res.ingredients
                   });
                 })
               }} />

@@ -7,6 +7,8 @@ import TextField from 'material-ui/lib/text-field';
 import AutoComplete from 'material-ui/lib/auto-complete';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import api from '../api.jsx';
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
+import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 
 const styles = {
   container: {
@@ -35,6 +37,11 @@ const styles = {
   titleView: {
     minHeight: '200px',
   },
+  floatingButton: {
+    position: 'fixed',
+    bottom: '50px',
+    right: '50px'
+  }
 }
 
 export default class AddDrinkView extends React.Component {
@@ -164,7 +171,12 @@ export default class AddDrinkView extends React.Component {
   render() {
     return (
       <section>
-      <RaisedButton label="Create Drink" onTouchTap={this.handleOpen} />
+      <FloatingActionButton
+          label="Create Drink"
+          style={styles.floatingButton}
+          onTouchTap={this.handleOpen}>
+        <ContentAdd/>
+      </FloatingActionButton>
         <Dialog
           contentStyle={styles.container}
           title="Create Drink"

@@ -74,14 +74,19 @@ let API = {
   randomDrinks() {
     return request('get', 'random');
   },
-  getLikedDrink(username) {
-    return request('post', 'likedrink', {
-      username: username,
+  clusterCenters(userName) {
+    return request('post', 'clustercenter', {
+      username: userName
     })
   },
-  getIngredient(drinkname) {
+  getLikedDrink(userName) {
+    return request('post', 'likedrink', {
+      username: userName,
+    })
+  },
+  getIngredient(drinkName) {
     return request('post', 'getingredient', {
-      drinktyped:drinkname,
+      drinktyped:drinkName,
     })
   },
 

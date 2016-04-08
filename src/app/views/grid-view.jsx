@@ -66,7 +66,8 @@ class GridListView extends React.Component {
       res.drinks.forEach(drink => drink.featured = false);
       this.setState({ drinks: res.drinks });
     } else {
-      let res = await api.randomDrinks();
+      let res = await api.clusterCenters(UserStore.username);
+      //let res = await api.randomDrinks();
       this.updateDrinkTiles(res);
     }
   }

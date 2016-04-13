@@ -1,12 +1,12 @@
 import React from 'react';
-import GridView from './views/grid-view'
-import DrinkSearchByIngredientView from './views/drink-search-by-ingredient-view'
-import NavBar from './views/navbar'
-import Dd from './views/d3-view'
-import { AutoComplete, Badge, IconButton, FontIcon } from 'material-ui/lib';
+import NavBar from './views/navbar';
+import D3 from './views/d3-view';
+import { AutoComplete, Badge, IconButton, FontIcon, RaisedButton } from 'material-ui/lib';
 import api from './api';
 
-import AuthMixin from './mixins/auth-mixin'
+import AuthMixin from './mixins/auth-mixin';
+import UIDispatcher from './utils/ui-dispatcher';
+import UIEvents from './utils/ui-events.jsx';
 
 const styles = {
   div: {
@@ -17,11 +17,18 @@ const styles = {
   title: {
     fontSize: '65px'
   },
-  searchBox: {
-    display: 'block',
+  searchDiv: {
+    display: 'inline',
+    marginTop: 30,
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '72%'
+    width: '80%'
+  },
+  searchBox: {
+
+  },
+  searchButton: {
+    marginLeft: 11
   },
   ingredientText: {
     backgroundColor: '#E6E6E6',
@@ -46,7 +53,8 @@ export default React.createClass({
       ingredientKey: 0,
       ingredientHash: {},
       ingredientSource: [],
-      ingredientTags: []
+      ingredientTags: [],
+      visualizationData: {}
     };
   },
 
@@ -140,6 +148,14 @@ export default React.createClass({
     }
   },
 
+  submit() {
+    api.searchDrinkByIngredient(Object.keys(this.state.ingredientHash)).then(res => {
+      console.log(res);
+      let data = this.getData(res.drinknames);
+      this.setState({visualizationData: data});
+    }).catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, err));
+  },
+
   render() {
     return (
       <section>
@@ -148,16 +164,25 @@ export default React.createClass({
           transparent={false}/>
         <div style={styles.div}>
           <h1 style={styles.title}>Visualization</h1>
-          <AutoComplete
-            style={styles.searchBox}
-            hintText="Add Ingredient"
-            filter={AutoComplete.caseInsensitiveFilter}
-            dataSource={this.state.ingredientSource}
-            onUpdateInput={this.ingredientUpdateInput}
-            onNewRequest={this.ingredientNewRequest} />
+          <div style={styles.searchDiv}>
+            <AutoComplete
+              style={styles.searchBox}
+              hintText="Add Ingredient"
+              filter={AutoComplete.caseInsensitiveFilter}
+              dataSource={this.state.ingredientSource}
+              onUpdateInput={this.ingredientUpdateInput}
+              onNewRequest={this.ingredientNewRequest} />
+            <RaisedButton
+              label="Search"
+              primary={true}
+              style={styles.searchButton}
+              onTouchTap={this.submit}/>
+          </div>
           <div style={styles.ingredientSection}>
             {this.state.ingredientTags}
           </div>
+          <D3
+            data={this.state.visualizationData}/>
         </div>
       </section>
     );

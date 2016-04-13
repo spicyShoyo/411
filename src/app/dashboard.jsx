@@ -39,10 +39,9 @@ export default React.createClass({
           title="Bacchanalia"
           transparent={false} />
         <div style={styles.div}>
-        <DropDownMenuView style={styles.searchBar}/>
-        <AddDrinkView/>
-        <DrinkSearchByIngredientView/>
-        <GridView/>
+          <DropDownMenuView style={styles.searchBar}/>
+          <AddDrinkView/>
+          <GridView/>
         </div>
       </div>
     );

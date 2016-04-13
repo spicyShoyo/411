@@ -86,9 +86,6 @@ export default class AddDrinkView extends React.Component {
 
   ingredientNewRequest(t) {
     if (t !== '') {
-      api.addIngredient(this.state.drinkName, t);
-      this.setState({ingredientNames: this.state.ingredientNames.concat(t)});
-      //console.log(this.state.ingredientNames);
       let newButton =
         <section>
           <RaisedButton label={t} onClick={()=> {

@@ -6,7 +6,7 @@ import Main from './main'; // Our custom react component
 import Home from './home';
 import Dashboard from './dashboard';
 import FavoritePage from './favorite-page';
-import virtualizedPage from './virtualized';
+import VirtualizedPage from './virtualized';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -27,7 +27,7 @@ class App extends React.Component {
           <IndexRoute component={Home} />
           <Route path="dashboard" component={Dashboard} />
           <Route path="favorites" component={FavoritePage} />
-          <Route path="virtualized" component={virtualizedPage} />
+          <Route path="virtualized" component={VirtualizedPage} />
         </Route>
       </Router>
     );

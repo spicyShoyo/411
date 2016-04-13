@@ -9,5 +9,6 @@ export default {
   SNACKBAR_TOGGLE: 'event.main.snackbar.toggle',
   GRID_LIST_REFRESH: 'event.dashboard.grid_list.refresh',
   UPDATE_GRID: 'event.dashboard.update_grid',
-  DRINK_DETAILS_TOGGLE: 'event.dashboard.drink_detail_toggle'
+  DRINK_DETAILS_TOGGLE: 'event.dashboard.drink_detail_toggle',
+  DRINK_DETAILS_TOGGLE_VS: 'event.dashboard.drink_detail_toggle_VS'
 };

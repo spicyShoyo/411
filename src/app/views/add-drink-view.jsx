@@ -174,7 +174,7 @@ export default class AddDrinkView extends React.Component {
       <FloatingActionButton
           label="Create Drink"
           style={styles.floatingButton}
-          onTouchTap={this.handleOpen}>
+          onClick={this.handleOpen}>
         <ContentAdd/>
       </FloatingActionButton>
         <Dialog

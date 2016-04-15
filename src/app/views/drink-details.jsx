@@ -9,6 +9,8 @@ import { Card, CardMedia, CardTitle, CardText } from 'material-ui/lib/card';
 import UIDispatcher from './../utils/ui-dispatcher';
 import UIEvents from './../utils/ui-events';
 
+import { browserHistory } from 'react-router';
+
 const styles = {
   dialog: {
     overflow: 'auto'
@@ -41,6 +43,10 @@ const styles = {
 
 export default React.createClass({
 
+  onClickSimilarDrink() {
+    browserHistory.push(`/recommend?drinkname=${this.props.details.drinkname}`);
+  },
+
   render() {
     const actions = [
       <FlatButton
@@ -59,7 +65,7 @@ export default React.createClass({
       );
     });
 
-    return (
+    return (this.props.details === null) ? null : (
       <Dialog
         open={this.props.open}
         actions={actions}
@@ -106,6 +112,11 @@ export default React.createClass({
             </Tabs>
           </CardText>
         </Card>
+        <FlatButton
+          label="Similar Drinks"
+          onClick={this.onClickSimilarDrink}
+          secondary={true}
+        />
       </Dialog>
     );
   }

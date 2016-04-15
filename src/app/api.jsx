@@ -85,10 +85,10 @@ let API = {
     })
   },
   similarDrink(userName, drinkName) {
-    return request('post', 'username', 'drinkname'), {
+    return request('post', 'recommendation', {
       username: userName,
       drinkname: drinkName
-    }
+    })
   },
   getLikedDrink(userName) {
     return request('post', 'likedrink', {

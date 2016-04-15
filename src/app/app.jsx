@@ -7,6 +7,7 @@ import Home from './home';
 import Dashboard from './dashboard';
 import FavoritePage from './favorite-page';
 import VirtualizedPage from './virtualized';
+import Recommend from './recommend';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -28,6 +29,7 @@ class App extends React.Component {
           <Route path="dashboard" component={Dashboard} />
           <Route path="favorites" component={FavoritePage} />
           <Route path="virtualized" component={VirtualizedPage} />
+          <Route path="recommend" component={Recommend} />
         </Route>
       </Router>
     );

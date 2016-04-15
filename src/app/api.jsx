@@ -80,12 +80,12 @@ let API = {
     })
   },
   createDrink(userName) {
-    return requeset('post', 'createdrink', {
+    return request('post', 'createdrink', {
       username: userName
     })
   },
   similarDrink(userName, drinkName) {
-    return requeset('post', 'username', 'drinkname'), {
+    return request('post', 'username', 'drinkname'), {
       username: userName,
       drinkname: drinkName
     }

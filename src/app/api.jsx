@@ -1,4 +1,4 @@
-const serverURL = "http://bac-backend.herokuapp.com/v1/"
+const serverURL = "http://localhost:51119/v1/"
 
 // const serverURL = "http://localhost:51119/v1/"
 
@@ -78,6 +78,17 @@ let API = {
     return request('post', 'clustercenter', {
       username: userName
     })
+  },
+  createDrink(userName) {
+    return requeset('post', 'createdrink', {
+      username: userName
+    })
+  },
+  similarDrink(userName, drinkName) {
+    return requeset('post', 'username', 'drinkname'), {
+      username: userName,
+      drinkname: drinkName
+    }
   },
   getLikedDrink(userName) {
     return request('post', 'likedrink', {

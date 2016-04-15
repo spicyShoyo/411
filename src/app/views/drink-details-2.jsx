@@ -60,21 +60,6 @@ export default React.createClass({
     });
 
     return (
-      //<Dialog
-      //  open={this.props.open}
-      //  actions={actions}
-      //  style={styles.dialog}>
-      //  <h1 style={styles.title}>{this.props.details.drinkname}</h1>
-      //  <img style={styles.image} src={this.props.details.url} />
-      //  <div style={styles.contentDiv}>
-      //    <h3>Category</h3>
-      //    <h5>{this.props.details.category}</h5>
-      //    <h3>Alcohol Type?</h3>
-      //    <h5>{this.props.details.alcoholic ? 'Alcoholic' : 'Shots'}</h5>
-      //    <h3>Glass</h3>
-      //    <h5>{this.props.details.glass}</h5>
-      //  </div>
-      //</Dialog>
       <Dialog
         open={this.props.open}
         actions={actions}

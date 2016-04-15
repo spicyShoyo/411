@@ -39,6 +39,11 @@ const styles = {
     marginLeft: 'auto',
     marginRight: 'auto',
     width: '72%'
+  },
+  virSection: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '100%'
   }
 };
 
@@ -151,8 +156,12 @@ export default React.createClass({
   submit() {
     api.searchDrinkByIngredient(Object.keys(this.state.ingredientHash)).then(res => {
       console.log(res);
-      let data = this.getData(res.drinknames);
-      this.setState({visualizationData: data});
+      if(res.error==="Drinkname not found!") {
+        UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, ':/ Please try another set of ingredients.')
+      }else {
+        let data = this.getData(res.drinknames);
+        this.setState({visualizationData: data});
+      }
     }).catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, err));
   },
 
@@ -181,8 +190,10 @@ export default React.createClass({
           <div style={styles.ingredientSection}>
             {this.state.ingredientTags}
           </div>
+          <div style={styles.virSection}>
           <D3
             data={this.state.visualizationData}/>
+        </div>
         </div>
       </section>
     );

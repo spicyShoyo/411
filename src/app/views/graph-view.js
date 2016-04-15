@@ -11,7 +11,7 @@ export default React.createClass({
     return {
         graph: {},
         identifier:uuid.v4(),
-        // style:{width:"960px",height:"480px"}
+        style:{width:"100%"}
     };
   },
 

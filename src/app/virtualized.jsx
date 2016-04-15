@@ -7,6 +7,7 @@ import api from './api';
 import AuthMixin from './mixins/auth-mixin';
 import UIDispatcher from './utils/ui-dispatcher';
 import UIEvents from './utils/ui-events.jsx';
+import Spinner from './views/spinner-view.jsx';
 
 const styles = {
   div: {
@@ -59,7 +60,8 @@ export default React.createClass({
       ingredientHash: {},
       ingredientSource: [],
       ingredientTags: [],
-      visualizationData: {}
+      visualizationData: {},
+      showSpinner: false
     };
   },
 
@@ -154,8 +156,10 @@ export default React.createClass({
   },
 
   submit() {
+    this.setState({showSpinner: true});
     api.searchDrinkByIngredient(Object.keys(this.state.ingredientHash)).then(res => {
       console.log(res);
+      this.setState({showSpinner: false});
       if(res.error==="Drinkname not found!") {
         UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, ':/ Please try another set of ingredients.')
       }else {
@@ -195,6 +199,7 @@ export default React.createClass({
             data={this.state.visualizationData}/>
         </div>
         </div>
+        <Spinner cond={this.state.showSpinner} />
       </section>
     );
   }

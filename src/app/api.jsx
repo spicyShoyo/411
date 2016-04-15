@@ -71,7 +71,7 @@ let API = {
       drinkname: drinkName
     })
   },
-  randomDrinks() {
+  randomUrl() {
     return request('get', 'random');
   },
   clusterCenters(userName) {

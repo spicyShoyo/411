@@ -63,20 +63,20 @@ export default React.createClass({
               <tr>
                 <td style={styles.tagTableData}>
                   <IntroTagView
-                    imageSrc="http://lorempixel.com/200/150/nature">
-                    Ha!
+                    imageSrc="http://www.material-ui.com/images/get-started.svg">
+                    Easy!
                   </IntroTagView>
                 </td>
                 <td style={styles.tagTableData}>
                   <IntroTagView
-                    imageSrc="http://lorempixel.com/200/150/nature">
-                    Ha!
+                    imageSrc="http://www.material-ui.com/images/css-framework.svg">
+                    Personal!
                   </IntroTagView>
                 </td>
                 <td style={styles.tagTableData}>
                   <IntroTagView
-                    imageSrc="http://lorempixel.com/200/150/nature">
-                    Ha!
+                    imageSrc="http://www.material-ui.com/images/components.svg">
+                    Visualized!
                   </IntroTagView>
                 </td>
               </tr>

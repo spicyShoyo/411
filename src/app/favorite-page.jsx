@@ -6,6 +6,7 @@ import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'
 
 import AuthMixin from './mixins/auth-mixin'
+import CreateDrinkView from './views/create-drink-view'
 
 const styles = {
   container: {
@@ -28,6 +29,7 @@ export default React.createClass({
           transparent={false} />
         <div style={styles.div}>
         <GridView favoritePage={true}/>
+        <CreateDrinkView/>
         </div>
       </div>
     );

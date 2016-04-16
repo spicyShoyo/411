@@ -60,7 +60,7 @@ class GridListView extends React.Component {
     let resArr = res["drinks"];
     this.setState({ drinks: resArr });
     this.setState({
-      showSpinner: false 
+      showSpinner: false
     })
   }
 
@@ -110,7 +110,16 @@ class GridListView extends React.Component {
                     if (this.state.likedDrinks.filter(n => n === tile.drinkname).length === 0) {
                       this.setState({likedDrinks: this.state.likedDrinks.concat([tile.drinkname])})
                       api.likeADrink(UserStore.username, tile.drinkname)
-                        .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
+                        .then(res => {
+                          let newDrinks=[]; //delete when liked
+                          for(let i=0; i<this.state.drinks.length; ++i) {
+                            if(this.state.drinks[i].drinkname!==tile.drinkname) {
+                              newDrinks.push(this.state.drinks[i]);
+                            }
+                          }
+                          this.setState({drinks:newDrinks});  //delete when liked done
+                          UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks);
+                        })
                         .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
                     } else {
                       this.setState({likedDrinks: this.state.likedDrinks.reduce((a, c) => {
@@ -118,7 +127,16 @@ class GridListView extends React.Component {
                         else return a.concat([c])
                       }, [])})
                       api.unlikeADrink(UserStore.username, tile.drinkname)
-                        .then(res => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks))
+                        .then(res => {
+                          let newDrinks=[]; //delete when liked
+                          for(let i=0; i<this.state.drinks.length; ++i) {
+                            if(this.state.drinks[i].drinkname!==tile.drinkname) {
+                              newDrinks.push(this.state.drinks[i]);
+                            }
+                          }
+                          this.setState({drinks:newDrinks});  //delete when liked done
+                          UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, res.drinks);
+                        })
                         .catch(err => UIDispatcher.emit(UIEvents.SNACKBAR_TOGGLE, `Network Error: ${err}`))
                     }
                   }}>

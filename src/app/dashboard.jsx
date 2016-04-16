@@ -5,7 +5,7 @@ import AddDrinkView from './views/add-drink-view'
 import DrinkSearchByIngredientView from './views/drink-search-by-ingredient-view'
 import DrinkSearchView from './views/drink-search-view'
 import NavBar from './views/navbar'
-import CreateDrinkView from './views/create-drink-view'
+
 
 import UIDispatcher from './utils/ui-dispatcher'
 import UIEvents from './utils/ui-events'
@@ -43,7 +43,7 @@ export default React.createClass({
           <DropDownMenuView style={styles.searchBar}/>
           <AddDrinkView/>
           <GridView/>
-          <CreateDrinkView/>
+
         </div>
       </div>
     );

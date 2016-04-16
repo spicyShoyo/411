@@ -8,10 +8,9 @@ import AutoComplete from 'material-ui/lib/auto-complete';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import api from '../api.jsx';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
-import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import ContentAdd from 'material-ui/lib/svg-icons/editor/insert-emoticon';
 import UserStore from '../stores/user-store';
 import { Card, CardMedia, CardText, CardActions, CardHeader} from 'material-ui/lib/card';
-
 
 const styles = {
   dialog: {
@@ -35,8 +34,11 @@ const styles = {
   },
   floatingButton: {
     position: 'fixed',
-    bottom: '150px',
-    right: '30px'
+    bottom: '50px',
+    right: '50px'
+  },
+  ingredients: {
+    malineheight:"150%"
   }
 }
 
@@ -85,33 +87,29 @@ export default class CreateDrinkView extends React.Component {
   render() {
     return (
       <section>
-        <RaisedButton
-          label="Create New Drink"
+        <FloatingActionButton
+          label="New Drink"
           style={styles.floatingButton}
           onClick={this.handleOpen}>
           <ContentAdd/>
-        </RaisedButton>
+        </FloatingActionButton>
         <Dialog
           open={this.state.open}
           onRequestClose={this.handleClose}
           bodyStyle={styles.dialog}>
           <Card>
             <CardHeader
-              title="Create New Drink"
+              title="I'm Feeling Lucky"
             />
             <CardMedia>
               <img style={styles.image} src={this.state.url}/>
             </CardMedia>
-            <CardActions>
-              <FlatButton
-                label="Cancel"
-                primary={false}
-                keyboardFocused={false}
-                onTouchTap={this.handleClose}
-              />
-            </CardActions>
+
             <CardText>
-              <table style={styles.table}>
+              <h2 style={styles.ingredients}>
+              {this.state.ingredientsRow}
+            </h2>
+              {/*<table style={styles.table}>
               <thead>
                 <tr>
                   <th><h3>Name</h3></th>
@@ -122,8 +120,16 @@ export default class CreateDrinkView extends React.Component {
               <tbody>
                 {this.state.ingredientsRow}
               </tbody>
-              </table>
+              </table>*/}
             </CardText>
+            <CardActions>
+              <FlatButton
+                label="Cancel"
+                primary={false}
+                keyboardFocused={false}
+                onTouchTap={this.handleClose}
+              />
+            </CardActions>
           </Card>
         </Dialog>
       </section>
